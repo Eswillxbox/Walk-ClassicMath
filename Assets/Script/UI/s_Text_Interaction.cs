@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class s_Text_Interaction : MonoBehaviour
 {
-    public TextMeshProUGUI _interaction_Text;//交互文本
+    public Text _interaction_Text;//交互文本
 
 
 

@@ -16,7 +16,7 @@ public class s_ShowPythagorean : MonoBehaviour
 {
     public static s_ShowPythagorean instance;
 
-    public TextMeshProUGUI _question_Text;//文本
+    public Text _question_Text;//文本
     public Button _Test_Button;
     public Button _Test_Back_Button;
 
