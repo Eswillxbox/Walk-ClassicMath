@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PythagoreanData : MonoBehaviour
+public class s_PythagoreanData : MonoBehaviour
 {
   //单例
-    public static PythagoreanData instance;
+    public static s_PythagoreanData instance;
 
   //其他类调用
     //所有的用于替换的预制体

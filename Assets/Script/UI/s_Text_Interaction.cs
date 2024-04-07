@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 public class s_Text_Interaction : MonoBehaviour
 {
     public Text _interaction_Text;//交互文本
+    public Text _tips_Text;
 
 
 
@@ -30,16 +32,13 @@ public class s_Text_Interaction : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
+
+    //绑定UI点击事件
     void MouseDown()
     {
         // 添加EventTrigger组件
-        EventTrigger eventTrigger = _interaction_Text.gameObject.AddComponent<EventTrigger>();
+        EventTrigger eventTrigger = gameObject.AddComponent<EventTrigger>();
 
         // 创建一个新的EventTrigger.Entry用于PointerDown事件
         EventTrigger.Entry pointerDownEntry = new EventTrigger.Entry();
@@ -56,9 +55,17 @@ public class s_Text_Interaction : MonoBehaviour
     //更新文本，点击鼠标
     public void Update_InteractionText(PointerEventData data)
     {
+        if (index == AllText_Array.Length)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        _tips_Text.text = "下一页";
+
         if (index == AllText_Array.Length - 1)
         {
-            return;
+            _tips_Text.text = "关闭";
         }
 
         //更新文本
