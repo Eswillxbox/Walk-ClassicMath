@@ -48,8 +48,12 @@ public class y_Player : MonoBehaviour
             //GetComponent<PlayerController>().StopAgent();
         }
     }
-    public float getAttackValue()
+    public float GetAttackValue()
     {
         return setAttack;
+    }
+    public float GetRealHp()
+    {
+        return player_RealHp;
     }
 }
