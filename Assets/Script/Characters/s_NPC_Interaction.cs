@@ -10,7 +10,7 @@ public class s_NPC_Interaction : MonoBehaviour
 
     Transform childTransform;//提示
     //提示距离
-    float distance = 100f;
+    float distance = 1f;
 
 
     // Start is called before the first frame update

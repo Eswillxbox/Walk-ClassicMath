@@ -24,6 +24,7 @@ public class MouseManager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray, out hitInfo);
         MouseControl();
+
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
     }

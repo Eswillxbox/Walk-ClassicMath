@@ -17,6 +17,6 @@ public class Move : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
 
-        transform.Translate(new Vector3(h, 0, v));
+        transform.Translate(new Vector3(-v, 0, h) * Time.deltaTime);
     }
 }
