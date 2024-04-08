@@ -23,12 +23,12 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        //player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
     {
-        DisplayAttribute();
+        // DisplayAttribute();
     }
 
     public void DisplayBattle(bool isDisplay)
@@ -43,8 +43,10 @@ public class GameManager : MonoBehaviour
         player_Hp.fillAmount = player.GetComponent<y_Player>().GetRealHp() / player.GetComponent<y_Player>().maxHp;
     }
 
+    //角色攻击
     public void PlayerAttack()
     {
         enemy.GetComponent<y_Enemy>().WasAttack(player.GetComponent<y_Player>().GetAttackValue());
     }
+
 }
