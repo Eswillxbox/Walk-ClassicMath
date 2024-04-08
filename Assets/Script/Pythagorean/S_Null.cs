@@ -60,7 +60,7 @@ public class S_Null : MonoBehaviour
 
 
         //更换子物体存储数据
-        PythagoreanData.instance.playerChild_data = type;
+        s_PythagoreanData.instance.playerChild_data = type;
         
     }
 
@@ -77,7 +77,7 @@ public class S_Null : MonoBehaviour
             player = other.gameObject;
 
             //判断玩家身上是否有子物体字母
-            PickUp_Change = !PythagoreanData.instance.JudgePlayerChilde_Active();
+            PickUp_Change = !s_PythagoreanData.instance.JudgePlayerChilde_Active();
         }
     }
 

@@ -40,34 +40,36 @@ public class s_Puzzle : MonoBehaviour
 
     private void Update()
     {
-        //判断当答案满足要求的时候，此时该算式不进行任何操作
-        if (JudgeAnswer())
-        {
-            return;
-        }
 
         //玩家没到指定位置，不执行任何操作
         if (player == null)
         {
             return;
         }
+        //判断当答案满足要求的时候，此时该算式不进行任何操作
+        if (JudgeAnswer())
+        {
+            return;
+        }
+
+        
         //print(111);
         PutDown();
     }
 
     void InitData()
     {
-        isActive = PythagoreanData.instance.JudgePlayerChilde_Active();
+        isActive = s_PythagoreanData.instance.JudgePlayerChilde_Active();
 
         //初始化算式内容
-        childGameObject.GetComponent<MeshFilter>().mesh = PythagoreanData.instance.GetPuzzleData_Mesh(type).sharedMesh;
+        childGameObject.GetComponent<MeshFilter>().mesh = s_PythagoreanData.instance.GetPuzzleData_Mesh(type).sharedMesh;
     }
 
 
     //判断当更换的数据一致的时候，此时该算式不进行任何操作
     bool JudgeAnswer()
     {
-        int puzzleData = PythagoreanData.instance.GetPuzzleData(type);
+        int puzzleData = s_PythagoreanData.instance.GetPuzzleData(type);
         if (puzzleData != -1 && puzzleData == type)
         {
             return true;
@@ -107,7 +109,7 @@ public class s_Puzzle : MonoBehaviour
     void Mesh_Exchange()
     {
         //交换用于存储的数据
-        PythagoreanData.instance.Exchange_PuzzleAndPlayerChildData(type);
+        s_PythagoreanData.instance.Exchange_PuzzleAndPlayerChildData(type);
 
         //交换玩家和道具mesh
         Mesh tempMesh;
@@ -119,18 +121,20 @@ public class s_Puzzle : MonoBehaviour
         SetChildTransform();
     }
 
+
+    //设置子物体的transform信息，根据显示mesh不同改变transform
     void SetChildTransform()
     {
 
         //判断当前展示的是否是线
-        if (PythagoreanData.instance.GetPuzzleData(type) == 3)
+        if (s_PythagoreanData.instance.GetPuzzleData(type) == 3)
         {
             childGameObject.transform.localPosition = childPosition;
             childGameObject.transform.localScale = new Vector3(3,1,1);
         }
         else
         {
-            childGameObject.transform.localPosition = new Vector3(childPosition.x,0, childPosition.z);
+            childGameObject.transform.localPosition = new Vector3(childPosition.x,-0.001f, childPosition.z);
             childGameObject.transform.localScale = Vector3.one;
         }
     }
@@ -144,19 +148,22 @@ public class s_Puzzle : MonoBehaviour
         {
             player = other.gameObject;
             //判断玩家身上是否有子物体字母
-            isActive = PythagoreanData.instance.JudgePlayerChilde_Active();
+            isActive = s_PythagoreanData.instance.JudgePlayerChilde_Active();
         }
 
         //判断物体是否是线
-        if (transform.GetChild(0).name.Contains("线"))
-            {
-                isLineOfChild = true;
-            }
-            else
-            {
-                isLineOfChild = false;
-            }
+        if (s_PythagoreanData.instance.GetPuzzleData(type) == 3)
+        {
+            isLineOfChild = true;
+        }
+        else
+        {
+            isLineOfChild = false;
+        }
+
     }
+
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
