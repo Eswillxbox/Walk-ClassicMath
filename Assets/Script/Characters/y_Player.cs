@@ -50,7 +50,7 @@ public class y_Player : MonoBehaviour
     }
     public float GetAttackValue()
     {
-        return setAttack;
+        return player_RealAttack;
     }
     public float GetRealHp()
     {

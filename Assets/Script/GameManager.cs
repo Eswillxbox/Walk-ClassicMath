@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
 {
     static public GameManager instance;
     [Header("Character")]
-    public GameObject player;
+    private GameObject player;
+    public GameObject enemy;
     [Header("UI")]
     public Image player_Hp;
     public Text player_HpNum;
@@ -35,9 +36,15 @@ public class GameManager : MonoBehaviour
         battle_Display.gameObject.SetActive(isDisplay);
     }
 
+    //UI血量显示
     public void DisplayAttribute()
     {
         player_HpNum.text = player.GetComponent<y_Player>().GetRealHp().ToString();
         player_Hp.fillAmount = player.GetComponent<y_Player>().GetRealHp() / player.GetComponent<y_Player>().maxHp;
+    }
+
+    public void PlayerAttack()
+    {
+        enemy.GetComponent<y_Enemy>().WasAttack(player.GetComponent<y_Player>().GetAttackValue());
     }
 }
