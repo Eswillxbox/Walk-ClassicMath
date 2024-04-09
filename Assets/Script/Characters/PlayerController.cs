@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private void SwitchAnimation()
     {
-        //anim.SetFloat("Speed", agent.velocity.sqrMagnitude);
+        anim.SetFloat("Speed", agent.velocity.sqrMagnitude);
     }
 
     public void MoveToTarget(Vector3 target)

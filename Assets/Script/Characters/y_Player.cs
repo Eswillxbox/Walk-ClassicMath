@@ -14,6 +14,7 @@ public class y_Player : MonoBehaviour
     public bool deFend;
     public float setAttack;
     public float actionTime;
+    public bool isInYangHui;
     void Start()
     {
         //初始化
@@ -25,6 +26,7 @@ public class y_Player : MonoBehaviour
     void Update()
     {
         if (target != null) MoveToTarget();
+        if (isInYangHui) YangHuiScene();
     }
     //被攻击对方调用
     public void WasAttack(float a)
@@ -55,5 +57,8 @@ public class y_Player : MonoBehaviour
     public float GetRealHp()
     {
         return player_RealHp;
+    }
+    public void YangHuiScene()
+    {
     }
 }

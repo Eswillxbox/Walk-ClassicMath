@@ -52,17 +52,17 @@ public class GameManager : MonoBehaviour
 
     public void YangHuiMove(bool isLeft)
     {
-        if (isLeft)
+        if (isLeft && player_basic.GetComponent<y_Basic>().leftBasic != null)
         {
             player.GetComponent<PlayerController>().MoveToTarget(player_basic.GetComponent<y_Basic>().leftBasic.transform.position);
             player_basic = player_basic.GetComponent<y_Basic>().leftBasic;
         }
-        else
+        else if (!isLeft && player_basic.GetComponent<y_Basic>().rightBasic != null)
         {
             player.GetComponent<PlayerController>().MoveToTarget(player_basic.GetComponent<y_Basic>().rightBasic.transform.position);
             player_basic = player_basic.GetComponent<y_Basic>().rightBasic;
         }
-
+        return;
     }
 
 }
