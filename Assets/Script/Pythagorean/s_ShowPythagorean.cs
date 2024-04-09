@@ -22,6 +22,9 @@ public class s_ShowPythagorean : MonoBehaviour
     public Button _Test_Button;
     public Button _Test_Back_Button;
     public GameObject show_panel;
+    public Image show_Image;
+    [Header("副摄像机")]
+    public Camera cam;
 
 
     //记录物体的transform信息
@@ -105,18 +108,24 @@ public class s_ShowPythagorean : MonoBehaviour
             }
             show_panel.SetActive(true);
             _question_Text.transform.parent.gameObject.SetActive(true);
+            cam.gameObject.SetActive(true);
             isShow++;
             //清除上一次残余物体
             ClearGameObject();
             InitData();
+            
         });
         //绑返回键
         _Test_Back_Button.onClick.AddListener(delegate
         {
             show_panel.SetActive(false);
             _question_Text.transform.parent.gameObject.SetActive(false);
-            isShow = 0;
+            show_Image.gameObject.SetActive(false);
             transforms[0].gameObject.SetActive(false);
+            cam.gameObject.SetActive(false);
+
+            isShow = 0;
+            
         });
     }
 
@@ -167,20 +176,23 @@ public class s_ShowPythagorean : MonoBehaviour
         {
             index++;
             //更新步骤
+            //达到最大值不在生成
             if (index == transforms.Count)
             {
                 index2++;
-            }
-
-            //达到最大值不在生成
-            if (index >= transforms.Count)
-            {
                 return;
             }
 
+            
+
             currentGameObject = Instantiate(currentGameObject);
+            
             //设置为子物体
             currentGameObject.transform.SetParent(this.transform.GetChild(0),false);
+            //初始将三角移动到镜头内
+            currentGameObject.transform.position = transforms[0].position;
+
+
             //改变大小
             currentGameObject.transform.localScale *= 1;
 

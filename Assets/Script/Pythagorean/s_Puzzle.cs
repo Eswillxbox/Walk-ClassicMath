@@ -27,13 +27,12 @@ public class s_Puzzle : MonoBehaviour
     GameObject childGameObject;
 
     //记录子物体线的位置
-    Vector3 childPosition;
+
 
     // Start is called before the first frame update
     private void Start()
     {
         childGameObject = transform.GetChild(0).gameObject;
-        childPosition = childGameObject.transform.localPosition;
         InitData();
     }
 
@@ -108,8 +107,7 @@ public class s_Puzzle : MonoBehaviour
     //交换mesh
     void Mesh_Exchange()
     {
-        //交换用于存储的数据
-        s_PythagoreanData.instance.Exchange_PuzzleAndPlayerChildData(type);
+        
 
         //交换玩家和道具mesh
         Mesh tempMesh;
@@ -119,24 +117,22 @@ public class s_Puzzle : MonoBehaviour
         childGameObject.transform.GetComponent<MeshFilter>().mesh = tempMesh;
 
         SetChildTransform();
+        //交换用于存储的数据
+        s_PythagoreanData.instance.Exchange_PuzzleAndPlayerChildData(type);
     }
 
 
     //设置子物体的transform信息，根据显示mesh不同改变transform
     void SetChildTransform()
     {
-
+        childGameObject.transform.localPosition = transform.GetChild(1).transform.localPosition;
         //判断当前展示的是否是线
         if (s_PythagoreanData.instance.GetPuzzleData(type) == 3)
         {
-            childGameObject.transform.localPosition = childPosition;
-            childGameObject.transform.localScale = new Vector3(3,1,1);
+            
+            childGameObject.transform.localScale = transform.GetChild(1).transform.localScale;
         }
-        else
-        {
-            childGameObject.transform.localPosition = new Vector3(childPosition.x,-0.001f, childPosition.z);
-            childGameObject.transform.localScale = Vector3.one;
-        }
+
     }
 
 

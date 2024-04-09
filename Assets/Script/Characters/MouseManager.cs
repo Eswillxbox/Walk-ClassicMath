@@ -11,7 +11,7 @@ public class MouseManager : MonoBehaviour
     public static MouseManager Instance;
     RaycastHit hitInfo;
     public event Action<Vector3> OnMouseClicked;
-
+    public bool setUp;
     private void Awake()
     {
         if (Instance != null)
@@ -33,8 +33,13 @@ public class MouseManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && hitInfo.collider != null)
         {
-            if (hitInfo.collider.gameObject.CompareTag("Ground"))
+            if (hitInfo.collider.gameObject.CompareTag("Ground") && setUp)
                 OnMouseClicked!.Invoke(hitInfo.point);
         }
+    }
+
+    public void SwitchSetUp()
+    {
+        setUp = setUp ? false : true;
     }
 }

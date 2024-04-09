@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public Text player_HpNum;
     [Header("ModelBuilding")]
     public GameObject battle_Display;
+    public GameObject player_basic;
 
     private void Awake()
     {
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        //player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
@@ -47,6 +48,21 @@ public class GameManager : MonoBehaviour
     public void PlayerAttack()
     {
         enemy.GetComponent<y_Enemy>().WasAttack(player.GetComponent<y_Player>().GetAttackValue());
+    }
+
+    public void YangHuiMove(bool isLeft)
+    {
+        if (isLeft)
+        {
+            player.GetComponent<PlayerController>().MoveToTarget(player_basic.GetComponent<y_Basic>().leftBasic.transform.position);
+            player_basic = player_basic.GetComponent<y_Basic>().leftBasic;
+        }
+        else
+        {
+            player.GetComponent<PlayerController>().MoveToTarget(player_basic.GetComponent<y_Basic>().rightBasic.transform.position);
+            player_basic = player_basic.GetComponent<y_Basic>().rightBasic;
+        }
+
     }
 
 }
