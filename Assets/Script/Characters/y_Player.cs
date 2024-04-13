@@ -6,21 +6,21 @@ public class y_Player : MonoBehaviour
 {
     [Header("基本属性")]
     [SerializeField] private float player_RealHp;
-    [SerializeField] private float player_RealAttack;
-    [SerializeField] private bool player_InBattle;
-    [SerializeField] private GameObject battle_Target;
+    //[SerializeField] private float player_RealAttack;
+    //[SerializeField] private bool player_InBattle;
+    //[SerializeField] private GameObject battle_Target;
     public GameObject target;
     public float maxHp;
-    public bool deFend;
+    //public bool deFend;
     public float setAttack;
-    public float actionTime;
+    //public float actionTime;
     public bool isInYangHui;
     void Start()
     {
         //初始化
-        player_InBattle = false;
+        //player_InBattle = false;
         player_RealHp = maxHp;
-        player_RealAttack = setAttack;
+        //player_RealAttack = setAttack;
     }
 
     void Update()
@@ -43,17 +43,17 @@ public class y_Player : MonoBehaviour
         }
         else
         {
-            battle_Target = target;
-            player_InBattle = true;
+            //battle_Target = target;
+            //player_InBattle = true;
             target = null;
-            GameManager.instance.DisplayBattle(true);
+            //GameManager.instance.DisplayBattle(true);
             //GetComponent<PlayerController>().StopAgent();
         }
     }
-    public float GetAttackValue()
-    {
-        return player_RealAttack;
-    }
+    // public float GetAttackValue()
+    // {
+    //     return player_RealAttack;
+    // }
     public float GetRealHp()
     {
         return player_RealHp;

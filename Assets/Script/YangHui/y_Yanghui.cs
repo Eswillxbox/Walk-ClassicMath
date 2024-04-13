@@ -6,11 +6,14 @@ public class y_Yanghui : MonoBehaviour
 {
     [Header("棋盘基座")]
     public GameObject player_Basic;
+    public Stack<GameObject> back_Basic;
     public int basicNum;
     private Vector3[,] basic_position;
     void Start()
     {
         CreateBasic();
+        GameManager.instance.GetYangHui(this.gameObject);
+        back_Basic = new Stack<GameObject>();
     }
 
     // Update is called once per frame
