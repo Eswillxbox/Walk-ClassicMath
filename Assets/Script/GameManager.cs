@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     public Text player_HpNum;
     [Header("ModelBuilding")]
     public GameObject battle_Display;
+    public GameObject[] effect_Perhaps;
     private GameObject yangHui;
     private GameObject player_basic;
 
@@ -64,13 +66,17 @@ public class GameManager : MonoBehaviour
         {
             player.GetComponent<PlayerController>().MoveToTarget(player_basic.GetComponent<y_Basic>().leftBasic.transform.position);
             yangHui.GetComponent<y_Yanghui>().back_Basic.Push(player_basic);
+            player_basic.GetComponent<y_Basic>().UpBasic();
             player_basic = player_basic.GetComponent<y_Basic>().leftBasic;
+            player_basic.GetComponent<y_Basic>().DownBasic();
         }
         else if (!isLeft && player_basic.GetComponent<y_Basic>().rightBasic != null)
         {
             player.GetComponent<PlayerController>().MoveToTarget(player_basic.GetComponent<y_Basic>().rightBasic.transform.position);
             yangHui.GetComponent<y_Yanghui>().back_Basic.Push(player_basic);
+            player_basic.GetComponent<y_Basic>().UpBasic();
             player_basic = player_basic.GetComponent<y_Basic>().rightBasic;
+            player_basic.GetComponent<y_Basic>().DownBasic();
         }
         return;
     }
@@ -80,10 +86,27 @@ public class GameManager : MonoBehaviour
         if (yangHui.GetComponent<y_Yanghui>().back_Basic.Count != 0)
         {
             GameObject back = yangHui.GetComponent<y_Yanghui>().back_Basic.Pop();
+            player_basic.GetComponent<y_Basic>().UpBasic();
             player_basic = back;
             player.GetComponent<PlayerController>().MoveToTarget(back.transform.position);
             player.transform.position = back.transform.position;
+            player_basic.GetComponent<y_Basic>().DownBasic();
         }
         return;
+    }
+
+    //效果[陷阱,回退,无用,Buff,Debuff,回血,显示数字]
+    public GameObject GetEffect(String effectName)
+    {
+        int i = UnityEngine.Random.Range(0, 2);
+        switch (effectName)
+        {
+            case "得与失": return effect_Perhaps[5];
+            case "陷阱": return effect_Perhaps[1];
+            case "帮助": return effect_Perhaps[3];
+            case "无用": return effect_Perhaps[2];
+            default: break;
+        }
+        return null;
     }
 }
