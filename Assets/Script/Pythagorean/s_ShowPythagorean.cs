@@ -16,16 +16,22 @@ public class s_ShowPythagorean : MonoBehaviour
 {
     public static s_ShowPythagorean instance;
 
-    public TextMeshProUGUI _question_Text;//文本
+
+    [Header("UI")]
+    public Text _question_Text;//文本
     public Button _Test_Button;
     public Button _Test_Back_Button;
-
-
     public GameObject show_panel;
+    public Image show_Image;
+    [Header("副摄像机")]
+    public Camera cam;
+
+
     //记录物体的transform信息
+    [Header("演示的正方形的transform")]
     public List<Transform> transforms;
 
-    public bool isShow = false;//是否展示
+    int isShow = 0;//限定第一次点击演示按钮触发
 
     //创建的待清理的游戏物体
     List<GameObject> claearGameObjects;
@@ -58,30 +64,14 @@ public class s_ShowPythagorean : MonoBehaviour
     void Start()
     {
         InitData();
-        _Test_Button.onClick.AddListener(delegate
-        {
-            show_panel.SetActive(true);
-            _question_Text.transform.parent.gameObject.SetActive(true);
-            isShow = true;
-            InitData();
-        });
-
-        _Test_Back_Button.onClick.AddListener(delegate
-        {
-            show_panel.SetActive(false);
-            _question_Text.transform.parent.gameObject.SetActive(false);
-            isShow = false;
-            ClearGameObject();
-            InitData();
-            transforms[0].gameObject.SetActive(false);
-        });
+        BindButton();
     }
 
     // Update is called once per frame
     void Update()
     {
         //失活不执行逻辑
-        if (!isShow)
+        if (isShow != 1)
         {
             return;
         }
@@ -104,15 +94,40 @@ public class s_ShowPythagorean : MonoBehaviour
                 UpdateText();
                 break;
         }
-
-        
-
-
-
-
-
     }
 
+
+    void BindButton()
+    {
+        //绑定点击键
+        _Test_Button.onClick.AddListener(delegate
+        {
+            if (isShow != 0)
+            {
+                return;
+            }
+            show_panel.SetActive(true);
+            _question_Text.transform.parent.gameObject.SetActive(true);
+            cam.gameObject.SetActive(true);
+            isShow++;
+            //清除上一次残余物体
+            ClearGameObject();
+            InitData();
+            
+        });
+        //绑返回键
+        _Test_Back_Button.onClick.AddListener(delegate
+        {
+            show_panel.SetActive(false);
+            _question_Text.transform.parent.gameObject.SetActive(false);
+            show_Image.gameObject.SetActive(false);
+            transforms[0].gameObject.SetActive(false);
+            cam.gameObject.SetActive(false);
+
+            isShow = 0;
+            
+        });
+    }
 
     void InitData()
     {
@@ -161,22 +176,25 @@ public class s_ShowPythagorean : MonoBehaviour
         {
             index++;
             //更新步骤
+            //达到最大值不在生成
             if (index == transforms.Count)
             {
                 index2++;
-            }
-
-            //达到最大值不在生成
-            if (index >= transforms.Count)
-            {
                 return;
             }
 
+            
+
             currentGameObject = Instantiate(currentGameObject);
+            
             //设置为子物体
-            currentGameObject.transform.parent = this.transform.GetChild(0);
+            currentGameObject.transform.SetParent(this.transform.GetChild(0),false);
+            //初始将三角移动到镜头内
+            currentGameObject.transform.position = transforms[0].position;
+
+
             //改变大小
-            currentGameObject.transform.localScale *= 20;
+            currentGameObject.transform.localScale *= 1;
 
             claearGameObjects.Add(currentGameObject);
             
@@ -201,11 +219,13 @@ public class s_ShowPythagorean : MonoBehaviour
 
     void JudgeAllBool()
     {
-        if (Quaternion.Angle(currentGameObject.transform.rotation, finalTransform.rotation) <= 0.2)
+        //判断角度
+        if (Quaternion.Angle(currentGameObject.transform.rotation, finalTransform.rotation) <= 1)
         {
             isRotate = false;
         }
 
+        //判断位置
         if (currentGameObject.transform.position == finalTransform.position)
         {
             isReach = true;

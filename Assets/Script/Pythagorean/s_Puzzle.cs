@@ -2,17 +2,172 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 1.判断玩家身上是否为激活，失活则打印请去获取道具吧
+/// 2.判断是否是线
+///     a.当是线的时候，不为空，将线换成玩家头上的物体，即putdown
+///     b.有字符的时候(不是线的时候)，与玩家身上的物体进行更换,即change
+/// 3.正确字符闪光特效
+/// 
+/// </summary>
+
+
 public class s_Puzzle : MonoBehaviour
 {
+
+    public int type;
+
+
+    [SerializeField ()]
+    bool isActive;//true 放下，false 则更换
+    bool isLineOfChild = true;//子物体是否是线
+
+
+    GameObject player;
+    GameObject childGameObject;
+
+    //记录子物体线的位置
+
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        childGameObject = transform.GetChild(0).gameObject;
+        InitData();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void Update()
+    {
+
+        //玩家没到指定位置，不执行任何操作
+        if (player == null)
+        {
+            return;
+        }
+        //判断当答案满足要求的时候，此时该算式不进行任何操作
+        if (JudgeAnswer())
+        {
+            return;
+        }
+
+        
+        //print(111);
+        PutDown();
+    }
+
+    void InitData()
+    {
+        isActive = s_PythagoreanData.instance.JudgePlayerChilde_Active();
+
+        //初始化算式内容
+        childGameObject.GetComponent<MeshFilter>().mesh = s_PythagoreanData.instance.GetPuzzleData_Mesh(type).sharedMesh;
+    }
+
+
+    //判断当更换的数据一致的时候，此时该算式不进行任何操作
+    bool JudgeAnswer()
+    {
+        int puzzleData = s_PythagoreanData.instance.GetPuzzleData(type);
+        if (puzzleData != -1 && puzzleData == type)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+
+    void PutDown()
+    {
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (!isActive)
+            {
+                //没激活，打印请获取道具吧
+                print("请获取道具吧!");
+                return;
+            }
+
+            Mesh_Exchange();
+            if (isLineOfChild)
+            {
+                //激活但是算式是线，则放下玩家子物体，玩家物体失活
+                player.transform.GetChild(0).gameObject.SetActive(false);
+                isActive = false;//更改判断条件
+            }
+
+
+            
+        }
+    }
+
+
+    //交换mesh
+    void Mesh_Exchange()
     {
         
+
+        //交换玩家和道具mesh
+        Mesh tempMesh;
+        tempMesh = player.transform.GetChild(0).GetComponent<MeshFilter>().mesh;
+        player.transform.GetChild(0).GetComponent<MeshFilter>().mesh =
+            childGameObject.transform.GetComponent<MeshFilter>().mesh;
+        childGameObject.transform.GetComponent<MeshFilter>().mesh = tempMesh;
+
+        SetChildTransform();
+        //交换用于存储的数据
+        s_PythagoreanData.instance.Exchange_PuzzleAndPlayerChildData(type);
+    }
+
+
+    //设置子物体的transform信息，根据显示mesh不同改变transform
+    void SetChildTransform()
+    {
+        childGameObject.transform.localPosition = transform.GetChild(1).transform.localPosition;
+        //判断当前展示的是否是线
+        if (s_PythagoreanData.instance.GetPuzzleData(type) == 3)
+        {
+            
+            childGameObject.transform.localScale = transform.GetChild(1).transform.localScale;
+        }
+
+    }
+
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player = other.gameObject;
+            //判断玩家身上是否有子物体字母
+            isActive = s_PythagoreanData.instance.JudgePlayerChilde_Active();
+        }
+
+        //判断物体是否是线
+        if (s_PythagoreanData.instance.GetPuzzleData(type) == 3)
+        {
+            isLineOfChild = true;
+        }
+        else
+        {
+            isLineOfChild = false;
+        }
+
+    }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player = null;
+        }
     }
 }
+
+
+   
