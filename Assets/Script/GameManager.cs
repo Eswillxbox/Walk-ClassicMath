@@ -109,4 +109,9 @@ public class GameManager : MonoBehaviour
         }
         return null;
     }
+
+    public GameObject GetPlayerBasic()
+    {
+        return player_basic;
+    }
 }

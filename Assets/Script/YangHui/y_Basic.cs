@@ -47,6 +47,6 @@ public class y_Basic : MonoBehaviour
         this.transform.position += new Vector3(0, 0.28f, 0);
         //平台上升时效果消失
         if (basicEffect != null)
-            GameObject.Destroy(basicEffect);
+            basicEffect.gameObject.SetActive(false);
     }
 }
