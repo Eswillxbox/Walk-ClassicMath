@@ -89,6 +89,7 @@ public class y_Yanghui : MonoBehaviour
                 }
                 //设置基座的数字
                 temp.GetComponent<y_Basic>().numText.text = numArray[i, j].ToString();
+                temp.GetComponent<y_Basic>().basicNum = numArray[i, j];
             }
         }
     }

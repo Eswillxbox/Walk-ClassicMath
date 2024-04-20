@@ -26,7 +26,7 @@ public class y_Player : MonoBehaviour
     void Update()
     {
         if (target != null) MoveToTarget();
-        if (isInYangHui) YangHuiScene();
+        //YangHuiScene();
     }
     //被攻击对方调用
     public void WasAttack(float a)
@@ -60,5 +60,15 @@ public class y_Player : MonoBehaviour
     }
     public void YangHuiScene()
     {
+        MouseManager.instance.SwitchSetUp(isInYangHui);
+    }
+
+    public void Attacked(int i)
+    {
+        player_RealHp -= i;
+    }
+    public void Healing(int i)
+    {
+        player_RealHp += i;
     }
 }

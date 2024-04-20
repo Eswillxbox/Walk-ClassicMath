@@ -8,15 +8,15 @@ using System;
 // public class EventVector3 : UnityEvent<Vector3> { }
 public class MouseManager : MonoBehaviour
 {
-    public static MouseManager Instance;
+    public static MouseManager instance;
     RaycastHit hitInfo;
     public event Action<Vector3> OnMouseClicked;
     public bool setUp;
     private void Awake()
     {
-        if (Instance != null)
+        if (instance != null)
             Destroy(gameObject);
-        Instance = this;
+        instance = this;
     }
 
     private void Update()
@@ -33,13 +33,19 @@ public class MouseManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && hitInfo.collider != null)
         {
-            if (hitInfo.collider.gameObject.CompareTag("Ground") && setUp)
+            if (hitInfo.collider.gameObject.CompareTag("Ground") && !setUp)
                 OnMouseClicked!.Invoke(hitInfo.point);
+            if (hitInfo.collider.gameObject.CompareTag("Npc") && !setUp)
+            {
+                GameManager.instance.diaLogDisplay.SetActive(true);
+                this.setUp = true;
+            }
+
         }
     }
 
-    public void SwitchSetUp()
+    public void SwitchSetUp(bool setup)
     {
-        setUp = setUp ? false : true;
+        setUp = setup;
     }
 }
