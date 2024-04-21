@@ -65,6 +65,11 @@ public class GameManager : MonoBehaviour
         this.player_basic = yangHui.GetComponent<y_Yanghui>().player_Basic;
     }
 
+    public bool IsInYangHui()
+    {
+        return yangHui == null ? false : true;
+    }
+
     public void YangHuiMove(bool isLeft)
     {
         if (isLeft && player_basic.GetComponent<y_Basic>().leftBasic != null)

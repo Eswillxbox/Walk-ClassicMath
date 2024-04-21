@@ -89,7 +89,8 @@ public class y_TextDisplay : MonoBehaviour
             gameObject.SetActive(false);
             MouseManager.instance.setUp = false;
             //杨辉三角跳转
-            GameManager.instance.YangHuiScene(true);
+            if (GameManager.instance.IsInYangHui())
+                GameManager.instance.YangHuiScene(true);
             index = 0;
             return;
         }
