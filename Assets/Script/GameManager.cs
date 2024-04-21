@@ -11,10 +11,11 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     //public GameObject enemy;
     [Header("UI")]
+    public GameObject UI;
     public Image player_Hp;
     public Text player_HpNum;
+    public GameObject diaLogDisplay;
     [Header("ModelBuilding")]
-    public GameObject battle_Display;
     public GameObject[] effect_Perhaps;
     private GameObject yangHui;
     private GameObject player_basic;
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // DisplayAttribute();
+        if (player != null) DisplayAttribute();
     }
 
     // public void DisplayBattle(bool isDisplay)
@@ -41,10 +42,14 @@ public class GameManager : MonoBehaviour
     // }
 
     //UI血量显示
-    public void DisplayAttribute()
+    private void DisplayAttribute()
     {
-        player_HpNum.text = player.GetComponent<y_Player>().GetRealHp().ToString();
-        player_Hp.fillAmount = player.GetComponent<y_Player>().GetRealHp() / player.GetComponent<y_Player>().maxHp;
+        if (player_HpNum != null && player_Hp != null)
+        {
+            player_HpNum.text = player.GetComponent<y_Player>().GetRealHp().ToString();
+            player_Hp.fillAmount = player.GetComponent<y_Player>().GetRealHp() / player.GetComponent<y_Player>().maxHp;
+        }
+        return;
     }
 
     //角色攻击
@@ -69,6 +74,7 @@ public class GameManager : MonoBehaviour
             player_basic.GetComponent<y_Basic>().UpBasic();
             player_basic = player_basic.GetComponent<y_Basic>().leftBasic;
             player_basic.GetComponent<y_Basic>().DownBasic();
+            BasicEnd(player_basic.GetComponent<y_Basic>().basic_kind);
         }
         else if (!isLeft && player_basic.GetComponent<y_Basic>().rightBasic != null)
         {
@@ -77,6 +83,7 @@ public class GameManager : MonoBehaviour
             player_basic.GetComponent<y_Basic>().UpBasic();
             player_basic = player_basic.GetComponent<y_Basic>().rightBasic;
             player_basic.GetComponent<y_Basic>().DownBasic();
+            BasicEnd(player_basic.GetComponent<y_Basic>().basic_kind);
         }
         return;
     }
@@ -96,10 +103,10 @@ public class GameManager : MonoBehaviour
     }
 
     //效果[陷阱,回退,无用,Buff,Debuff,回血,显示数字]
-    public GameObject GetEffect(String effectName)
+    public GameObject GetEffect(String e_Name)
     {
         int i = UnityEngine.Random.Range(0, 2);
-        switch (effectName)
+        switch (e_Name)
         {
             case "得与失": return effect_Perhaps[5];
             case "陷阱": return effect_Perhaps[1];
@@ -113,5 +120,26 @@ public class GameManager : MonoBehaviour
     public GameObject GetPlayerBasic()
     {
         return player_basic;
+    }
+
+    private void BasicEnd(String e_Name)
+    {
+        switch (e_Name)
+        {
+            case "得与失": break;
+            case "陷阱": player.GetComponent<y_Player>().Attacked(player_basic.GetComponent<y_Basic>().basicNum / 2 + 1); break;
+            case "帮助": player.GetComponent<y_Player>().Healing(player_basic.GetComponent<y_Basic>().basicNum / 4 + 1); break;
+            case "无用": break;
+            default: break;
+        }
+        return;
+    }
+
+    public void YangHuiScene(bool isInYangHui)
+    {
+        MouseManager.instance.SwitchSetUp(isInYangHui);
+        player.transform.position = player_basic.transform.position;
+        player.GetComponent<PlayerController>().MoveToTarget(player_basic.transform.position);
+        UI.SetActive(true);
     }
 }

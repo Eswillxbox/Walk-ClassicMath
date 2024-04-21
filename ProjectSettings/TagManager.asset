@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Formula
   - Ground
+  - Npc
   layers:
   - Default
   - TransparentFX

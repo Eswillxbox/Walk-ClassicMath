@@ -7,6 +7,7 @@ public class y_Basic : MonoBehaviour
 {
     [Header("基本属性")]
     public TextMesh numText;
+    public int basicNum;
     public GameObject leftBasic;
     public GameObject rightBasic;
     public String basic_kind;
@@ -38,6 +39,7 @@ public class y_Basic : MonoBehaviour
     public void DownBasic()
     {
         this.transform.position -= new Vector3(0, 0.28f, 0);
+        numText.gameObject.SetActive(true);
         if (basicEffect == null)
             basicEffect = Instantiate(GameManager.instance.GetEffect(basic_kind), this.transform.position, this.transform.rotation, this.transform);
     }
@@ -45,8 +47,10 @@ public class y_Basic : MonoBehaviour
     public void UpBasic()
     {
         this.transform.position += new Vector3(0, 0.28f, 0);
+        numText.gameObject.SetActive(false);
         //平台上升时效果消失
         if (basicEffect != null)
             basicEffect.gameObject.SetActive(false);
     }
+
 }

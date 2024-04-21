@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        MouseManager.Instance.OnMouseClicked += MoveToTarget;
+        MouseManager.instance.OnMouseClicked += MoveToTarget;
     }
 
     // Update is called once per frame
