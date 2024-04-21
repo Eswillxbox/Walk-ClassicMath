@@ -326,7 +326,7 @@ MonoBehaviour:
   m_text: The larger title line is done using the <<#a0ffa0>size=120%</color>> tag.
     Alignment of the tag examples is done using the <<#a0ffa0>pos=xx.x</color>> tag.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   m_fontSharedMaterials:
   - {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -586,7 +586,7 @@ MonoBehaviour:
     Size <size=75%>Smaller / <size=1.5em>Bigger</size><pos=50%><<#ffff00>size=75%</color>>
     <<#ffff00>size=1.5em</color>> <<#ffff00>/size</color>>'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   m_fontSharedMaterials:
   - {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
