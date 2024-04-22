@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3311482}
   - component: {fileID: 2325060}
   - component: {fileID: 9599050}
+  - component: {fileID: 6493954619940228695}
   m_Layer: 0
   m_Name: Arnis
   m_TagString: Untagged
@@ -105,3 +106,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &6493954619940228695
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150956}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.039090887
+  m_Height: 5.5468316
+  m_Direction: 1
+  m_Center: {x: -0.00000019557771, y: 2.7455485, z: 0.000000046566125}

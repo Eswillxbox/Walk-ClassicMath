@@ -35,7 +35,7 @@ public class s_MouseMangerTest : MonoBehaviour
         //避免点击到外部，和UI上
         if (Input.GetMouseButtonDown(0) && hit.collider != null  && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (hit.collider.gameObject.CompareTag("Ground") || hit.collider.gameObject.CompareTag("Formula"))
+            if (hit.collider.gameObject.CompareTag("Ground") || hit.collider.gameObject.CompareTag("Item"))
             {
                 OnMouseButton?.Invoke(hit.point);
             }
