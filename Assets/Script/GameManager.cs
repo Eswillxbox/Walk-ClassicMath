@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -19,6 +20,10 @@ public class GameManager : MonoBehaviour
     public GameObject[] effect_Perhaps;
     private GameObject yangHui;
     private GameObject player_basic;
+
+    [Header("DataSpace")]
+    //待删除
+    public int sceneIndex = 0;
 
     private void Awake()
     {
@@ -146,5 +151,20 @@ public class GameManager : MonoBehaviour
         player.transform.position = player_basic.transform.position;
         player.GetComponent<PlayerController>().MoveToTarget(player_basic.transform.position);
         UI.SetActive(true);
+    }
+
+    public void ToNextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void ToMainScene()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void ChioseScene(int index)
+    {
+        SceneManager.LoadScene(index);
     }
 }

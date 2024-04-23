@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class s_TextDisplay : y_TextDisplay
+public class s_TextDisplay : MonoBehaviour
 {
+    public static s_TextDisplay instance;
+
     [Header("文本组件")]
     public Text dialogText;
     public Image faceImage;
@@ -19,12 +21,15 @@ public class s_TextDisplay : y_TextDisplay
     private List<string> textList = new List<string>();
     private void Awake()
     {
-        GetTextFormFile(textFile);
+        instance = this;
+        GetTextFormFile();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         DisPlayText();
     }
 
@@ -68,14 +73,20 @@ public class s_TextDisplay : y_TextDisplay
         index++;
     }
 
-    private void GetTextFormFile(TextAsset file)
+    public void GetTextFormFile(int n1 = 0,int n2 = 0)
     {
         textList.Clear();
         index = 0;
-        var lineDate = file.text.Split('\n');
+        var lineDate = textFile.text.Split('\n');
         foreach (var line in lineDate)
         {
-            textList.Add(line);
+            string str = line;
+            //判断当前是否是算式
+            if (line.Contains("="))
+            {
+                str = string.Format(str, n1, n2);
+            }
+            textList.Add(str);
         }
     }
 

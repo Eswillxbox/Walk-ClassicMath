@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class s_NPC_Interaction : MonoBehaviour
 {
     
-    public Image interaction_Image;//交互文本框
-
+    public GameObject interaction_Image;//交互文本框
 
     Transform player;
     Transform childTransform;//提示
@@ -33,6 +32,8 @@ public class s_NPC_Interaction : MonoBehaviour
         }
         
     }
+
+    
 
 
     //提示跟随玩家

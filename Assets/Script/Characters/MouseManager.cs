@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 
 // [System.Serializable]
@@ -38,7 +39,15 @@ public class MouseManager : MonoBehaviour
                 OnMouseClicked!.Invoke(hitInfo.point);
             if (hitInfo.collider.gameObject.CompareTag("Npc") && !setUp)
             {
-                GameManager.instance.diaLogDisplay.SetActive(true);
+                if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") == 0)
+                {
+                    GameManager.instance.diaLogDisplay.GetComponent<JudgeOnClickNPC>().JudgeNPC(hitInfo.collider.gameObject.name);
+                }
+                else
+                {
+                    GameManager.instance.diaLogDisplay.SetActive(true);
+                }
+                
                 this.setUp = true;
             }
 

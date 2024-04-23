@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class y_TextDisplay : MonoBehaviour
 {
+
     [Header("文本组件")]
     public Text dialogText;
     public Image faceImage;
@@ -82,15 +84,42 @@ public class y_TextDisplay : MonoBehaviour
         }
     }
 
+
+    public void GetTextFormFile1(TextAsset file,int n1 = 0, int n2 = 0)
+    {
+        textList.Clear();
+        index = 0;
+        var lineDate = file.text.Split('\n');
+        foreach (var line in lineDate)
+        {
+            string str = line;
+            //判断当前是否是算式
+            if (line.Contains("="))
+            {
+                str = string.Format(str, n1, n2);
+            }
+            textList.Add(str);
+        }
+    }
+
     private void DisPlayText()
     {
         if (Input.GetMouseButtonDown(0) && index == textList.Count)
         {
             gameObject.SetActive(false);
-            MouseManager.instance.setUp = false;
+            //不为这个场景
+            if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") == -1)
+            {
+                MouseManager.instance.setUp = false;
+            }
+            
             //杨辉三角跳转
             if (GameManager.instance.IsInYangHui())
                 GameManager.instance.YangHuiScene(true);
+            if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") > -1)
+            {
+               s_Item_UI.instance.isShowNewFormula = true;
+            }
             index = 0;
             return;
         }
