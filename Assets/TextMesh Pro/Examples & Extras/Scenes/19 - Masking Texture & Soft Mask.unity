@@ -270,7 +270,7 @@ MonoBehaviour:
     <size=25%>Move the text object relative to the parent
     with the 2D Rect Mask.</size>'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2100000, guid: 42df1c7856584b6b8db9a509b6b10074, type: 2}
   m_fontSharedMaterials:
   - {fileID: 2100000, guid: 42df1c7856584b6b8db9a509b6b10074, type: 2}

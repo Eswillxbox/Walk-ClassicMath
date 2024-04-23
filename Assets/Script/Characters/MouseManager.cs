@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 
 // [System.Serializable]
@@ -31,13 +33,21 @@ public class MouseManager : MonoBehaviour
 
     private void MouseControl()
     {
-        if (Input.GetMouseButtonDown(0) && hitInfo.collider != null)
+        if (Input.GetMouseButtonDown(0) && hitInfo.collider != null && !EventSystem.current.IsPointerOverGameObject())
         {
             if (hitInfo.collider.gameObject.CompareTag("Ground") && !setUp)
                 OnMouseClicked!.Invoke(hitInfo.point);
             if (hitInfo.collider.gameObject.CompareTag("Npc") && !setUp)
             {
-                GameManager.instance.diaLogDisplay.SetActive(true);
+                if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") == 0)
+                {
+                    GameManager.instance.diaLogDisplay.GetComponent<JudgeOnClickNPC>().JudgeNPC(hitInfo.collider.gameObject.name);
+                }
+                else
+                {
+                    GameManager.instance.diaLogDisplay.SetActive(true);
+                }
+                
                 this.setUp = true;
             }
 

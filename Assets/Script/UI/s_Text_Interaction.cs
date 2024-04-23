@@ -8,8 +8,8 @@ using UnityEngine.UI;
 
 public class s_Text_Interaction : MonoBehaviour
 {
-    public Text _interaction_Text;//交互文本
-    public Text _tips_Text;
+    Text _interaction_Text;//交互文本
+    Text _tips_Text;//下一页还是关闭
 
 
 
@@ -24,7 +24,8 @@ public class s_Text_Interaction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        _interaction_Text = transform.GetChild(0).GetComponent<Text>();
+        _tips_Text = transform.GetChild(1).GetComponent<Text>();
 
         AllText_Array = topic;
         MouseDown();
