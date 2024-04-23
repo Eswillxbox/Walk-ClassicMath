@@ -93,7 +93,7 @@ public class y_TextDisplay : MonoBehaviour
     }
 
 
-    public void GetTextFormFile1(TextAsset file,int n1 = 0, int n2 = 0)
+    public void GetTextFormFile1(TextAsset file, int n1 = 0, int n2 = 0)
     {
         textList.Clear();
         index = 0;
@@ -123,13 +123,11 @@ public class y_TextDisplay : MonoBehaviour
             {
                 MouseManager.instance.setUp = false;
             }
-            
-            //杨辉三角跳转
-            if (GameManager.instance.IsInYangHui())
-                GameManager.instance.YangHuiScene(true);
+
             if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") > -1)
             {
-               s_Item_UI.instance.isShowNewFormula = true;
+                if (s_Item_UI.instance != null)
+                    s_Item_UI.instance.isShowNewFormula = true;
             }
             index = 0;
             return;

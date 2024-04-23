@@ -155,6 +155,11 @@ public class GameManager : MonoBehaviour
             diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(2);
             diaLogDisplay.SetActive(true);
         }
+        if (player_basic.GetComponent<y_Basic>().basicNum == yangHui.GetComponent<y_Yanghui>().targetNum)
+        {
+            diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(3);
+            diaLogDisplay.SetActive(true);
+        }
         return;
     }
 

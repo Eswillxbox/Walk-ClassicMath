@@ -9,6 +9,7 @@ public class y_Yanghui : MonoBehaviour
     public Stack<GameObject> back_Basic;
     public int basicNum;
     private Vector3[,] basic_position;
+    public int targetNum;
     void Start()
     {
         CreateBasic();
