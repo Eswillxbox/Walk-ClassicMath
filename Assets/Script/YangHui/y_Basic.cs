@@ -41,7 +41,10 @@ public class y_Basic : MonoBehaviour
         this.transform.position -= new Vector3(0, 0.28f, 0);
         numText.gameObject.SetActive(true);
         if (basicEffect == null)
+        {
             basicEffect = Instantiate(GameManager.instance.GetEffect(basic_kind), this.transform.position, this.transform.rotation, this.transform);
+            Invoke("StopEffect", 2.0f);
+        }
     }
 
     public void UpBasic()
@@ -51,6 +54,11 @@ public class y_Basic : MonoBehaviour
         //平台上升时效果消失
         if (basicEffect != null)
             basicEffect.gameObject.SetActive(false);
+    }
+
+    private void StopEffect()
+    {
+        basicEffect.GetComponent<ParticleSystem>().Stop();
     }
 
 }

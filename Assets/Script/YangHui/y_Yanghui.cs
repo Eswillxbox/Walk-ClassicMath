@@ -19,7 +19,7 @@ public class y_Yanghui : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        CheckPlayerLose();
     }
 
     public void CreateBasic()
@@ -92,5 +92,47 @@ public class y_Yanghui : MonoBehaviour
                 temp.GetComponent<y_Basic>().basicNum = numArray[i, j];
             }
         }
+    }
+
+    private void ReloadYangHui(GameObject basic, bool isPlayerBasic)
+    {
+
+        if (basic.GetComponent<y_Basic>().leftBasic != null || basic.GetComponent<y_Basic>().rightBasic != null)
+        {
+            if (!isPlayerBasic)
+            {
+                // if (basic.GetComponent<y_Basic>().leftBasic != null)
+                //     ReloadYangHui(basic.GetComponent<y_Basic>().leftBasic, false);
+                // if (basic.GetComponent<y_Basic>().rightBasic != null)
+                //     ReloadYangHui(basic.GetComponent<y_Basic>().rightBasic, false);
+                Destroy(basic);
+            }
+            else
+            {
+                ReloadYangHui(basic.GetComponent<y_Basic>().leftBasic, false);
+                ReloadYangHui(basic.GetComponent<y_Basic>().rightBasic, false);
+            }
+        }
+        else if (basic.GetComponent<y_Basic>().leftBasic == null || basic.GetComponent<y_Basic>().rightBasic == null)
+        {
+            Destroy(basic);
+        }
+
+
+    }
+    private void CheckPlayerLose()
+    {
+        if (GameManager.instance.GetPlayer().GetComponent<y_Player>().CheckHpZero())
+        {
+            ReloadYangHui(player_Basic, true);
+            GameManager.instance.GetYangHui(this.gameObject);
+            MouseManager.instance.SwitchSetUp(false);
+            GameManager.instance.DisplayUI(false);
+        }
+    }
+
+    public void Test()
+    {
+        ReloadYangHui(player_Basic, true);
     }
 }

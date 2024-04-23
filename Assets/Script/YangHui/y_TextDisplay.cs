@@ -14,7 +14,8 @@ public class y_TextDisplay : MonoBehaviour
     public Sprite[] faceImages;
 
     [Header("文本文件")]
-    public TextAsset textFile;
+    public TextAsset[] textFile;
+    public int textFileIndex = 0;
     public int index;
     public float textSpeed;
     private bool textFinished = true;//文本是否输出完毕
@@ -22,13 +23,14 @@ public class y_TextDisplay : MonoBehaviour
     private List<string> textList = new List<string>();
     private void Awake()
     {
-        GetTextFormFile(textFile);
+        GetTextFormFile(textFile[textFileIndex]);
     }
 
     // Update is called once per frame
     void Update()
     {
         DisPlayText();
+        if (this.gameObject.activeSelf == true) MouseManager.instance.setUp = true;
     }
 
     private void OnEnable()
@@ -50,6 +52,12 @@ public class y_TextDisplay : MonoBehaviour
             case "B":
                 faceImage.sprite = faceImages[1];
                 index++;
+                break;
+            case "Y":
+                //杨辉三角跳转
+                if (GameManager.instance.IsInYangHui())
+                    GameManager.instance.YangHuiScene(true);
+                gameObject.SetActive(false);
                 break;
             default: break;
         }
@@ -87,10 +95,9 @@ public class y_TextDisplay : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && index == textList.Count)
         {
             gameObject.SetActive(false);
+            if (textFileIndex < textFile.Length - 1)
+                GetTextFormFile(textFile[++textFileIndex]);
             MouseManager.instance.setUp = false;
-            //杨辉三角跳转
-            if (GameManager.instance.IsInYangHui())
-                GameManager.instance.YangHuiScene(true);
             index = 0;
             return;
         }
@@ -101,7 +108,11 @@ public class y_TextDisplay : MonoBehaviour
             else if (!textFinished)
                 cancelTyping = !cancelTyping;
         }
+    }
 
-
+    public void SetTextFile(int index)
+    {
+        textFileIndex = index;
+        GetTextFormFile(textFile[textFileIndex]);
     }
 }

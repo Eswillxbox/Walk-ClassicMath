@@ -26,7 +26,6 @@ public class y_Player : MonoBehaviour
     void Update()
     {
         if (target != null) MoveToTarget();
-        //YangHuiScene();
     }
     //被攻击对方调用
     public void WasAttack(float a)
@@ -50,6 +49,13 @@ public class y_Player : MonoBehaviour
             //GetComponent<PlayerController>().StopAgent();
         }
     }
+
+    public bool CheckHpZero()
+    {
+        if (player_RealHp <= 0)
+            return true;
+        else return false;
+    }
     // public float GetAttackValue()
     // {
     //     return player_RealAttack;
@@ -57,10 +63,6 @@ public class y_Player : MonoBehaviour
     public float GetRealHp()
     {
         return player_RealHp;
-    }
-    public void YangHuiScene()
-    {
-        MouseManager.instance.SwitchSetUp(isInYangHui);
     }
 
     public void Attacked(int i)

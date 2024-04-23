@@ -90,6 +90,8 @@ public class GameManager : MonoBehaviour
             player_basic.GetComponent<y_Basic>().DownBasic();
             BasicEnd(player_basic.GetComponent<y_Basic>().basic_kind);
         }
+        UI.SetActive(false);
+        Invoke("DisplayUI", 2.0f);
         return;
     }
 
@@ -131,11 +133,22 @@ public class GameManager : MonoBehaviour
     {
         switch (e_Name)
         {
-            case "得与失": break;
+            case "得与失":
+                player.GetComponent<y_Player>().Attacked(10);
+                if (player_basic.GetComponent<y_Basic>().leftBasic != null)
+                    player_basic.GetComponent<y_Basic>().leftBasic.GetComponent<y_Basic>().numText.gameObject.SetActive(true);
+                if (player_basic.GetComponent<y_Basic>().rightBasic != null)
+                    player_basic.GetComponent<y_Basic>().rightBasic.GetComponent<y_Basic>().numText.gameObject.SetActive(true);
+                break;
             case "陷阱": player.GetComponent<y_Player>().Attacked(player_basic.GetComponent<y_Basic>().basicNum / 2 + 1); break;
             case "帮助": player.GetComponent<y_Player>().Healing(player_basic.GetComponent<y_Basic>().basicNum / 4 + 1); break;
             case "无用": break;
             default: break;
+        }
+        if (!player_basic.GetComponent<y_Basic>().leftBasic && !player_basic.GetComponent<y_Basic>().rightBasic)
+        {
+            diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(2);
+            diaLogDisplay.SetActive(true);
         }
         return;
     }
@@ -145,6 +158,21 @@ public class GameManager : MonoBehaviour
         MouseManager.instance.SwitchSetUp(isInYangHui);
         player.transform.position = player_basic.transform.position;
         player.GetComponent<PlayerController>().MoveToTarget(player_basic.transform.position);
+        DisplayUI(true);
+    }
+
+    public void DisplayUI(bool l)
+    {
+        UI.SetActive(l);
+    }
+
+    public void DisplayUI()
+    {
         UI.SetActive(true);
+    }
+    public GameObject GetPlayer()
+    {
+        if (player != null) return player;
+        return null;
     }
 }
