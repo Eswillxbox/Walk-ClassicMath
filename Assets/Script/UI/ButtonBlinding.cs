@@ -5,34 +5,34 @@ using UnityEngine.UI;
 
 public class ButtonBlinding : MonoBehaviour
 {
-    [Header("npc½»»¥ÎÄ±¾¿ò")]
-    public GameObject interaction1_Image;//npc½»»¥ÎÄ±¾¿ò1
+    [Header("npcï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½")]
+    public GameObject interaction1_Image;//npcï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½1
     public Button interaction1_Image_close_Buton;
-    [Header("npc½»»¥ÎÄ±¾¿ò2")]
-    public GameObject interaction2_Image;//npc½»»¥ÎÄ±¾¿ò1
+    [Header("npcï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½2")]
+    public GameObject interaction2_Image;//npcï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½1
     public Button interaction2_Image_close_Buton;
 
 
-    [Header("Ëã³ïÕ¹Ê¾")]
-    //Ëã³ïÕ¹Ê¾
+    [Header("ï¿½ï¿½ï¿½Õ¹Ê¾")]
+    //ï¿½ï¿½ï¿½Õ¹Ê¾
     public GameObject suanchou_Image;
     public Button suanchou_Image_open_Button, suanchou_Image_close_Button;
 
-    [Header("°ïÖúÕ¹Ê¾")]
-    //Ëã³ïÕ¹Ê¾
+    [Header("ï¿½ï¿½ï¿½ï¿½Õ¹Ê¾")]
+    //ï¿½ï¿½ï¿½Õ¹Ê¾
     public GameObject help_Image;
     public Button help_Image_open_Button, help_Image_close_Button;
 
-    [Header("¶Ô»°¿ò")]
-    //¶Ô»°¿ò
+    [Header("ï¿½Ô»ï¿½ï¿½ï¿½")]
+    //ï¿½Ô»ï¿½ï¿½ï¿½
     public GameObject DialogDisPlay_Image;
     public Button DialogDisPlay_Image_open_Button;
 
-    //Ìá½»
+    //ï¿½á½»
     public Button submit_Button;
     public Button river_Button;
 
-    //text¶Ô»°ÎÄ±¾
+    //textï¿½Ô»ï¿½ï¿½Ä±ï¿½
     public TextAsset[] textAssets;
 
     // Start is called before the first frame update
@@ -44,7 +44,7 @@ public class ButtonBlinding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnButtonBinding()
@@ -52,43 +52,43 @@ public class ButtonBlinding : MonoBehaviour
         interaction1_Image_close_Buton.onClick.AddListener(delegate
         {
             interaction1_Image.SetActive(false);
-            MouseManager.instance.setUp = false;
+            MouseManager.instance.closedMouseControl = false;
         });
 
         interaction2_Image_close_Buton.onClick.AddListener(delegate
         {
             interaction2_Image.SetActive(false);
-            MouseManager.instance.setUp = false;
+            MouseManager.instance.closedMouseControl = false;
         });
 
 
 
-        //¶Ô»°Ãæ°å
+        //ï¿½Ô»ï¿½ï¿½ï¿½ï¿½
         DialogDisPlay_Image_open_Button.onClick.AddListener(delegate
         {
             DialogDisPlay_Image.SetActive(true);
-            //µÃµ½ËãÊ½
+            //ï¿½Ãµï¿½ï¿½ï¿½Ê½
             s_Item_UI.instance.GetFormula(textAssets[0]);
-            //¶Ô»°¹ýÖ®ºó²Å¿ÉÒÔÌá½»
+            //ï¿½Ô»ï¿½ï¿½ï¿½Ö®ï¿½ï¿½Å¿ï¿½ï¿½ï¿½ï¿½á½»
             s_Item_UI.instance.IsSubmit = true;
         });
 
-        //Ìá½»
+        //ï¿½á½»
         submit_Button.onClick.AddListener(delegate
         {
             if (s_Item_UI.instance.IsSubmit)
             {
                 Text interaction_Text = interaction1_Image.transform.GetChild(1).GetComponent<Text>();
-                //Ìá½»ÅÐ¶Ï
+                //ï¿½á½»ï¿½Ð¶ï¿½
                 if (s_Item_UI.instance.JudgeAnswer())
                 {
-                    interaction_Text.text = "Äã¶ÔËã³ïµÄÓ¦ÓÃ¸ü½øÒ»²½ÁË";
+                    interaction_Text.text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ã¸ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½";
                     s_Item_UI.instance.IsSubmit = false;
 
                 }
                 else
                 {
-                    interaction_Text.text = "ÄãËÆºõ¶ÔËã³ïµÄÓ¦ÓÃ»¹²»Ì«ÀíÏë";
+                    interaction_Text.text = "ï¿½ï¿½ï¿½Æºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ã»ï¿½ï¿½ï¿½Ì«ï¿½ï¿½ï¿½ï¿½";
 
                 }
                 StartCoroutine(WaitShowText(interaction_Text));
@@ -96,7 +96,7 @@ public class ButtonBlinding : MonoBehaviour
         });
 
 
-        //¹ýºÓ
+        //ï¿½ï¿½ï¿½ï¿½
         river_Button.onClick.AddListener(delegate
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -104,7 +104,7 @@ public class ButtonBlinding : MonoBehaviour
         });
 
 
-        //Ëã³ïÕ¹Ê¾Ãæ°å
+        //ï¿½ï¿½ï¿½Õ¹Ê¾ï¿½ï¿½ï¿½
         suanchou_Image_open_Button.onClick.AddListener(delegate
         {
             suanchou_Image.SetActive(true);
@@ -115,7 +115,7 @@ public class ButtonBlinding : MonoBehaviour
             suanchou_Image.SetActive(false);
         });
 
-        //°ïÖúÕ¹Ê¾Ãæ°å
+        //ï¿½ï¿½ï¿½ï¿½Õ¹Ê¾ï¿½ï¿½ï¿½
         help_Image_open_Button.onClick.AddListener(delegate
         {
             help_Image.SetActive(true);
@@ -132,7 +132,7 @@ public class ButtonBlinding : MonoBehaviour
     IEnumerator WaitShowText(Text text)
     {
         yield return new WaitForSeconds(1.5f);
-        text.text = "ÄãÏëÒª×öÐ©Ê²Ã´ÄÅ£¡";
+        text.text = "ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ð©Ê²Ã´ï¿½Å£ï¿½";
     }
 
     void CrossRiver()

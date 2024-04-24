@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Npc
   - Item
+  - Basic
   layers:
   - Default
   - TransparentFX

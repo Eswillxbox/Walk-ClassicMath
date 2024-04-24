@@ -75,6 +75,31 @@ public class GameManager : MonoBehaviour
         return yangHui == null ? false : true;
     }
 
+    public void YangHuiScene(bool isInYangHui)
+    {
+        MouseManager.instance.SwitchSetUp(isInYangHui);
+        player.transform.position = player_basic.transform.position;
+        SetIsWaitChose(player_basic);
+        player_basic.GetComponent<y_Basic>().DownBasic();
+        player.GetComponent<PlayerController>().MoveToTarget(player_basic.transform.position);
+        //DisplayUI(true);
+    }
+
+    public void ExitYangHuiScene()
+    {
+        yangHui.GetComponent<y_Yanghui>().ReloadYangHui();
+        MouseManager.instance.SwitchSetUp(false);
+        //DisplayUI(false);
+    }
+
+    private void SetIsWaitChose(GameObject basic)
+    {
+        if (player_basic.GetComponent<y_Basic>().leftBasic != null)
+            basic.GetComponent<y_Basic>().leftBasic.GetComponent<y_Basic>().isWaitChoose = -1;
+        if (player_basic.GetComponent<y_Basic>().rightBasic != null)
+            basic.GetComponent<y_Basic>().rightBasic.GetComponent<y_Basic>().isWaitChoose = +1;
+    }
+
     public void YangHuiMove(bool isLeft)
     {
         if (player_basic == null) return;
@@ -83,7 +108,9 @@ public class GameManager : MonoBehaviour
             player.GetComponent<PlayerController>().MoveToTarget(player_basic.GetComponent<y_Basic>().leftBasic.transform.position);
             yangHui.GetComponent<y_Yanghui>().back_Basic.Push(player_basic);
             player_basic.GetComponent<y_Basic>().UpBasic();
+            player_basic.GetComponent<y_Basic>().rightBasic.GetComponent<y_Basic>().isWaitChoose = 0;
             player_basic = player_basic.GetComponent<y_Basic>().leftBasic;
+            SetIsWaitChose(player_basic);
             player_basic.GetComponent<y_Basic>().DownBasic();
             BasicEnd(player_basic.GetComponent<y_Basic>().basic_kind);
         }
@@ -92,12 +119,14 @@ public class GameManager : MonoBehaviour
             player.GetComponent<PlayerController>().MoveToTarget(player_basic.GetComponent<y_Basic>().rightBasic.transform.position);
             yangHui.GetComponent<y_Yanghui>().back_Basic.Push(player_basic);
             player_basic.GetComponent<y_Basic>().UpBasic();
+            player_basic.GetComponent<y_Basic>().leftBasic.GetComponent<y_Basic>().isWaitChoose = 0;
             player_basic = player_basic.GetComponent<y_Basic>().rightBasic;
+            SetIsWaitChose(player_basic);
             player_basic.GetComponent<y_Basic>().DownBasic();
             BasicEnd(player_basic.GetComponent<y_Basic>().basic_kind);
         }
-        UI.SetActive(false);
-        Invoke("DisplayUI", 2.0f);
+        //UI.SetActive(false);
+        //Invoke("DisplayUI", 2.0f);
         return;
     }
 
@@ -158,7 +187,7 @@ public class GameManager : MonoBehaviour
         }
         if (player_basic.GetComponent<y_Basic>().basicNum == yangHui.GetComponent<y_Yanghui>().targetNum)
         {
-            DisplayUI(false);
+            //DisplayUI(false);
             ExitYangHuiScene();
             diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(3);
             diaLogDisplay.SetActive(true);
@@ -166,20 +195,7 @@ public class GameManager : MonoBehaviour
         return;
     }
 
-    public void YangHuiScene(bool isInYangHui)
-    {
-        MouseManager.instance.SwitchSetUp(isInYangHui);
-        player.transform.position = player_basic.transform.position;
-        player.GetComponent<PlayerController>().MoveToTarget(player_basic.transform.position);
-        DisplayUI(true);
-    }
 
-    public void ExitYangHuiScene()
-    {
-        yangHui.GetComponent<y_Yanghui>().ReloadYangHui();
-        MouseManager.instance.SwitchSetUp(false);
-        DisplayUI(false);
-    }
 
     public void DisplayUI(bool l)
     {

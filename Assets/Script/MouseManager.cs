@@ -13,7 +13,7 @@ public class MouseManager : MonoBehaviour
     public static MouseManager instance;
     RaycastHit hitInfo;
     public event Action<Vector3> OnMouseClicked;
-    public bool setUp;
+    public bool closedMouseControl;
     private void Awake()
     {
         if (instance != null)
@@ -35,9 +35,9 @@ public class MouseManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && hitInfo.collider != null && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (hitInfo.collider.gameObject.CompareTag("Ground") && !setUp)
+            if (hitInfo.collider.gameObject.CompareTag("Ground") && !closedMouseControl)
                 OnMouseClicked!.Invoke(hitInfo.point);
-            if (hitInfo.collider.gameObject.CompareTag("Npc") && !setUp)
+            if (hitInfo.collider.gameObject.CompareTag("Npc") && !closedMouseControl)
             {
                 if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") == 0)
                 {
@@ -47,15 +47,21 @@ public class MouseManager : MonoBehaviour
                 {
                     GameManager.instance.diaLogDisplay.SetActive(true);
                 }
-                
-                this.setUp = true;
-            }
 
+                this.closedMouseControl = true;
+            }
+            if (hitInfo.collider.gameObject.CompareTag("Basic") && closedMouseControl)
+            {
+                if (hitInfo.collider.gameObject.GetComponent<y_Basic>().isWaitChoose == -1)
+                    GameManager.instance.YangHuiMove(true);
+                else if (hitInfo.collider.gameObject.GetComponent<y_Basic>().isWaitChoose == +1)
+                    GameManager.instance.YangHuiMove(false);
+            }
         }
     }
 
     public void SwitchSetUp(bool setup)
     {
-        setUp = setup;
+        closedMouseControl = setup;
     }
 }

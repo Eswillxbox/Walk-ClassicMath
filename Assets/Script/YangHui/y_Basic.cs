@@ -10,10 +10,15 @@ public class y_Basic : MonoBehaviour
     public int basicNum;
     public GameObject leftBasic;
     public GameObject rightBasic;
-    public String basic_kind;
+    [Header("特殊效果")]
+    public string basic_kind;
     private GameObject basicEffect;
+    private Material firstMaterial;
+    public Material highLight;
+    public int isWaitChoose = 0;
     void Start()
     {
+        firstMaterial = GetComponent<MeshRenderer>().material;
         SetBasicKind();
     }
 
@@ -51,9 +56,11 @@ public class y_Basic : MonoBehaviour
     {
         this.transform.position += new Vector3(0, 0.28f, 0);
         numText.gameObject.SetActive(false);
+        isWaitChoose = 0;
         //平台上升时效果消失
         if (basicEffect != null)
             basicEffect.gameObject.SetActive(false);
+        basic_kind = "无用";
     }
 
     private void StopEffect()
@@ -66,4 +73,14 @@ public class y_Basic : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    private void OnMouseEnter()
+    {
+        if (isWaitChoose != 0)
+            GetComponent<MeshRenderer>().material = highLight;
+    }
+
+    private void OnMouseExit()
+    {
+        GetComponent<MeshRenderer>().material = firstMaterial;
+    }
 }

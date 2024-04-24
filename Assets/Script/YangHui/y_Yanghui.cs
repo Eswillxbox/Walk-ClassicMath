@@ -121,7 +121,7 @@ public class y_Yanghui : MonoBehaviour
             ReloadYangHui();
             GameManager.instance.GetYangHui(this.gameObject);
             MouseManager.instance.SwitchSetUp(false);
-            GameManager.instance.DisplayUI(false);
+            //GameManager.instance.DisplayUI(false);
         }
     }
 

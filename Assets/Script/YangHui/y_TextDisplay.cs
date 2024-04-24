@@ -32,7 +32,7 @@ public class y_TextDisplay : MonoBehaviour
     void Update()
     {
         DisPlayText();
-        if (this.gameObject.activeSelf == true) MouseManager.instance.setUp = true;
+        if (this.gameObject.activeSelf == true) MouseManager.instance.closedMouseControl = true;
     }
 
     private void OnEnable()
@@ -59,12 +59,14 @@ public class y_TextDisplay : MonoBehaviour
                 //杨辉三角跳转
                 if (GameManager.instance.IsInYangHui())
                     GameManager.instance.YangHuiScene(true);
+                GetTextFormFile(textFile[textFileIndex]);
                 gameObject.SetActive(false);
                 break;
             case "EY":
                 //退出杨辉三角
                 if (GameManager.instance.IsInYangHui())
                     GameManager.instance.ExitYangHuiScene();
+                GetTextFormFile(textFile[textFileIndex]);
                 gameObject.SetActive(false);
                 break;
             default: break;
@@ -123,11 +125,11 @@ public class y_TextDisplay : MonoBehaviour
             gameObject.SetActive(false);
             if (textFileIndex < textFile.Length - 1)
                 GetTextFormFile(textFile[++textFileIndex]);
-            MouseManager.instance.setUp = false;
+            MouseManager.instance.closedMouseControl = false;
             //不为这个场景
             if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") == -1)
             {
-                MouseManager.instance.setUp = false;
+                MouseManager.instance.closedMouseControl = false;
             }
 
             if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") > -1)

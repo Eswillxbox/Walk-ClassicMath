@@ -7,29 +7,29 @@ public class s_TextDisplay : MonoBehaviour
 {
     public static s_TextDisplay instance;
 
-    [Header("ÎÄ±¾×é¼þ")]
+    [Header("ï¿½Ä±ï¿½ï¿½ï¿½ï¿½")]
     public Text dialogText;
     public Image faceImage;
     public Sprite[] faceImages;
 
-    [Header("ÎÄ±¾ÎÄ¼þ")]
+    [Header("ï¿½Ä±ï¿½ï¿½Ä¼ï¿½")]
     public TextAsset textFile;
     public int index;
     public float textSpeed;
-    private bool textFinished = true;//ÎÄ±¾ÊÇ·ñÊä³öÍê±Ï
-    private bool cancelTyping;//È¡ÏûÑÓÊ±Êä³öÎÄ×Ö
+    private bool textFinished = true;//ï¿½Ä±ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private bool cancelTyping;//È¡ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private List<string> textList = new List<string>();
     private void Awake()
     {
         instance = this;
         GetTextFormFile();
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         DisPlayText();
     }
 
@@ -73,7 +73,7 @@ public class s_TextDisplay : MonoBehaviour
         index++;
     }
 
-    public void GetTextFormFile(int n1 = 0,int n2 = 0)
+    public void GetTextFormFile(int n1 = 0, int n2 = 0)
     {
         textList.Clear();
         index = 0;
@@ -81,7 +81,7 @@ public class s_TextDisplay : MonoBehaviour
         foreach (var line in lineDate)
         {
             string str = line;
-            //ÅÐ¶Ïµ±Ç°ÊÇ·ñÊÇËãÊ½
+            //ï¿½Ð¶Ïµï¿½Ç°ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
             if (line.Contains("="))
             {
                 str = string.Format(str, n1, n2);
@@ -95,7 +95,7 @@ public class s_TextDisplay : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && index == textList.Count)
         {
             gameObject.SetActive(false);
-            MouseManager.instance.setUp = false;
+            MouseManager.instance.closedMouseControl = false;
             index = 0;
             return;
         }
