@@ -106,12 +106,12 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _Gloss: 0.5
+    - _Gloss: 0.272
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 0
-    - _Metallic: 0
+    - _Metallic: 0.316
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
