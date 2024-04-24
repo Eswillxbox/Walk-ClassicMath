@@ -9,6 +9,7 @@ public class y_Yanghui : MonoBehaviour
     public Stack<GameObject> back_Basic;
     public int basicNum;
     private Vector3[,] basic_position;
+    private Stack<GameObject> basic_Stack = new Stack<GameObject>();
     public int targetNum;
     void Start()
     {
@@ -55,6 +56,8 @@ public class y_Yanghui : MonoBehaviour
             {
                 //生成后拿到指针
                 temp = Instantiate(player_Basic, basic_position[i, j], player_Basic.transform.rotation, this.transform);
+                //存储一下生成的基座，便于重置
+                basic_Stack.Push(temp);
                 //最后一排不录入队列，也不能因复制首个基座得到左右节点
                 if (i != basicNum - 1) basicQueue.Enqueue(temp);
                 else
@@ -95,37 +98,27 @@ public class y_Yanghui : MonoBehaviour
         }
     }
 
-    private void ReloadYangHui(GameObject basic, bool isPlayerBasic)
+    IEnumerator DesAndBuildBasic()
     {
-
-        if (basic.GetComponent<y_Basic>().leftBasic != null || basic.GetComponent<y_Basic>().rightBasic != null)
+        while (basic_Stack.Count > 0)
         {
-            if (!isPlayerBasic)
-            {
-                // if (basic.GetComponent<y_Basic>().leftBasic != null)
-                //     ReloadYangHui(basic.GetComponent<y_Basic>().leftBasic, false);
-                // if (basic.GetComponent<y_Basic>().rightBasic != null)
-                //     ReloadYangHui(basic.GetComponent<y_Basic>().rightBasic, false);
-                Destroy(basic);
-            }
-            else
-            {
-                ReloadYangHui(basic.GetComponent<y_Basic>().leftBasic, false);
-                ReloadYangHui(basic.GetComponent<y_Basic>().rightBasic, false);
-            }
+            yield return new WaitForSeconds(0.15f);
+            if (basic_Stack.Count > 0)
+                basic_Stack.Pop().GetComponent<y_Basic>().ReBasic();
         }
-        else if (basic.GetComponent<y_Basic>().leftBasic == null || basic.GetComponent<y_Basic>().rightBasic == null)
-        {
-            Destroy(basic);
-        }
+        if (basic_Stack.Count != 0) basic_Stack.Clear();
+        Invoke("CreateBasic", 1.5f);
+    }
 
-
+    public void ReloadYangHui()
+    {
+        StartCoroutine(DesAndBuildBasic());
     }
     private void CheckPlayerLose()
     {
         if (GameManager.instance.GetPlayer().GetComponent<y_Player>().CheckHpZero())
         {
-            ReloadYangHui(player_Basic, true);
+            ReloadYangHui();
             GameManager.instance.GetYangHui(this.gameObject);
             MouseManager.instance.SwitchSetUp(false);
             GameManager.instance.DisplayUI(false);
@@ -134,6 +127,6 @@ public class y_Yanghui : MonoBehaviour
 
     public void Test()
     {
-        ReloadYangHui(player_Basic, true);
+        ReloadYangHui();
     }
 }

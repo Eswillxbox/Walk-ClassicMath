@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
 
     public void YangHuiMove(bool isLeft)
     {
+        if (player_basic == null) return;
         if (isLeft && player_basic.GetComponent<y_Basic>().leftBasic != null)
         {
             player.GetComponent<PlayerController>().MoveToTarget(player_basic.GetComponent<y_Basic>().leftBasic.transform.position);
@@ -157,6 +158,8 @@ public class GameManager : MonoBehaviour
         }
         if (player_basic.GetComponent<y_Basic>().basicNum == yangHui.GetComponent<y_Yanghui>().targetNum)
         {
+            DisplayUI(false);
+            ExitYangHuiScene();
             diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(3);
             diaLogDisplay.SetActive(true);
         }
@@ -169,6 +172,13 @@ public class GameManager : MonoBehaviour
         player.transform.position = player_basic.transform.position;
         player.GetComponent<PlayerController>().MoveToTarget(player_basic.transform.position);
         DisplayUI(true);
+    }
+
+    public void ExitYangHuiScene()
+    {
+        yangHui.GetComponent<y_Yanghui>().ReloadYangHui();
+        MouseManager.instance.SwitchSetUp(false);
+        DisplayUI(false);
     }
 
     public void DisplayUI(bool l)

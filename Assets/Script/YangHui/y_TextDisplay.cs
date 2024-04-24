@@ -61,6 +61,12 @@ public class y_TextDisplay : MonoBehaviour
                     GameManager.instance.YangHuiScene(true);
                 gameObject.SetActive(false);
                 break;
+            case "EY":
+                //退出杨辉三角
+                if (GameManager.instance.IsInYangHui())
+                    GameManager.instance.ExitYangHuiScene();
+                gameObject.SetActive(false);
+                break;
             default: break;
         }
         // for (int i = 0; i < textList[index].Length; i++)

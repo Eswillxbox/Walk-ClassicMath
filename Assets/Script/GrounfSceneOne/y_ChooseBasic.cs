@@ -21,7 +21,7 @@ public class y_ChooseBasic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ShowButtonText();
+        if (GameManager.instance.GetPlayerBasic() != null) ShowButtonText();
     }
 
     public void ShowButtonText()

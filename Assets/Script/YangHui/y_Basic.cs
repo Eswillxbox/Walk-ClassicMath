@@ -61,4 +61,9 @@ public class y_Basic : MonoBehaviour
         basicEffect.GetComponent<ParticleSystem>().Stop();
     }
 
+    public void ReBasic()
+    {
+        Destroy(this.gameObject);
+    }
+
 }
