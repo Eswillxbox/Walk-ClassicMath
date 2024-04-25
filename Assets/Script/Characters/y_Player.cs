@@ -73,4 +73,9 @@ public class y_Player : MonoBehaviour
     {
         player_RealHp += i;
     }
+    public void Healing(bool isExit)
+    {
+        if (isExit)
+            player_RealHp = maxHp;
+    }
 }

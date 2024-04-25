@@ -92,7 +92,6 @@ public class y_Yanghui : MonoBehaviour
                     basic_Temp.GetComponent<y_Basic>().rightBasic = temp;
                 }
                 //设置基座的数字
-                temp.GetComponent<y_Basic>().numText.text = numArray[i, j].ToString();
                 temp.GetComponent<y_Basic>().basicNum = numArray[i, j];
             }
         }
@@ -112,16 +111,20 @@ public class y_Yanghui : MonoBehaviour
 
     public void ReloadYangHui()
     {
+        player_Basic.GetComponent<y_Basic>().RePlayerBasic();
         StartCoroutine(DesAndBuildBasic());
+        Invoke("SetPlayerBasic", 10.5f);
+    }
+
+    private void SetPlayerBasic()
+    {
+        player_Basic.GetComponent<y_Basic>().UpBasic();
     }
     private void CheckPlayerLose()
     {
         if (GameManager.instance.GetPlayer().GetComponent<y_Player>().CheckHpZero())
         {
-            ReloadYangHui();
-            GameManager.instance.GetYangHui(this.gameObject);
-            MouseManager.instance.SwitchSetUp(false);
-            //GameManager.instance.DisplayUI(false);
+            GameManager.instance.ExitYangHuiScene();
         }
     }
 

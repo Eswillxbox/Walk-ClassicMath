@@ -53,9 +53,20 @@ public class MouseManager : MonoBehaviour
             if (hitInfo.collider.gameObject.CompareTag("Basic") && closedMouseControl)
             {
                 if (hitInfo.collider.gameObject.GetComponent<y_Basic>().isWaitChoose == -1)
-                    GameManager.instance.YangHuiMove(true);
+                {
+                    GameManager.instance.waitChooseBasic = -1;
+                    GameManager.instance.DisplayUI();
+                }
                 else if (hitInfo.collider.gameObject.GetComponent<y_Basic>().isWaitChoose == +1)
-                    GameManager.instance.YangHuiMove(false);
+                {
+                    GameManager.instance.waitChooseBasic = +1;
+                    GameManager.instance.DisplayUI();
+                }
+                else if (hitInfo.collider.gameObject.GetComponent<y_Basic>().isBackBasic)
+                {
+                    GameManager.instance.DisplayUI();
+                }
+
             }
         }
     }

@@ -63,11 +63,9 @@ public class y_TextDisplay : MonoBehaviour
                 gameObject.SetActive(false);
                 break;
             case "EY":
-                //退出杨辉三角
-                if (GameManager.instance.IsInYangHui())
-                    GameManager.instance.ExitYangHuiScene();
                 GetTextFormFile(textFile[textFileIndex]);
                 gameObject.SetActive(false);
+                MouseManager.instance.closedMouseControl = false;
                 break;
             default: break;
         }
