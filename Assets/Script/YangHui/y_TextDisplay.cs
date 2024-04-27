@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -89,6 +89,7 @@ public class y_TextDisplay : MonoBehaviour
 
     private void GetTextFormFile(TextAsset file)
     {
+        
         textList.Clear();
         index = 0;
         var lineDate = file.text.Split('\n');
@@ -107,11 +108,6 @@ public class y_TextDisplay : MonoBehaviour
         foreach (var line in lineDate)
         {
             string str = line;
-            //判断当前是否是算式
-            if (line.Contains("="))
-            {
-                str = string.Format(str, n1, n2);
-            }
             textList.Add(str);
         }
     }
@@ -123,18 +119,10 @@ public class y_TextDisplay : MonoBehaviour
             gameObject.SetActive(false);
             if (textFileIndex < textFile.Length - 1)
                 GetTextFormFile(textFile[++textFileIndex]);
-            MouseManager.instance.closedMouseControl = false;
-            //不为这个场景
-            if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") == -1)
-            {
-                MouseManager.instance.closedMouseControl = false;
-            }
 
-            if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") > -1)
-            {
-                if (s_Item_UI.instance != null)
-                    s_Item_UI.instance.isShowNewFormula = true;
-            }
+            
+
+            MouseManager.instance.closedMouseControl = false;
             index = 0;
             return;
         }
