@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] effect_Perhaps;
     private GameObject yangHui;
     private GameObject player_basic;
-    public GameObject message;
+    public Text message;
     public int waitChooseBasic = 0;
 
     [Header("DataSpace")]
@@ -151,6 +151,25 @@ public class GameManager : MonoBehaviour
         return;
     }
 
+    public void YangHuiMessage(string basic_kind)
+    {
+        switch (basic_kind)
+        {
+            case "得与失": message.text += "失去10点数,知晓前方节点的数字"; break;
+            case "陷阱": message.text += "失去若干点数，数值为此节点数字的一半"; break;
+            case "帮助": message.text += "恢复若干点数"; break;
+            case "无用": message.text += "来这里似乎并没有什么作用"; break;
+            default: break;
+        }
+        return;
+    }
+
+    public void YangHuiSetMessage(string text)
+    {
+        message.text = "";
+        message.text += text;
+    }
+
     //效果[陷阱,回退,无用,Buff,Debuff,回血,显示数字]
     public GameObject GetEffect(String e_Name)
     {
@@ -231,4 +250,5 @@ public class GameManager : MonoBehaviour
         if (player != null) return player;
         return null;
     }
+
 }
