@@ -12,6 +12,9 @@ public class s_UIControl : MonoBehaviour
     private Button CalculateChip_Open_Button,CalculateChip_Close_BUtton;
     private Button nextScene_Button;
 
+    [Header("角色")]
+    public GameObject[] Npcs;
+
     [Header ("3d算筹的父物体")]
     public Transform CalculateChipsParent;
     private Dictionary<int, Transform> calculateChips = new Dictionary<int, Transform>();
@@ -43,6 +46,8 @@ public class s_UIControl : MonoBehaviour
     TaskProgress taskProgress;
 
     public GameObject[] Formulas { get => formulas; set => formulas = value; }
+    public TaskProgress TaskProgress { get => taskProgress; set => taskProgress = value; }
+    public bool IsFirstDialog { get => isFirstDialog; set => isFirstDialog = value; }
 
     private void Start()
     {
@@ -377,6 +382,7 @@ public class s_UIControl : MonoBehaviour
                     {
                         taskProgress += 1;
                         isFirstDialog = true;
+                        
                         continue;
                     }
                     else
@@ -384,6 +390,7 @@ public class s_UIControl : MonoBehaviour
                         if (isFirstDialog)
                         {
                             GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(1);
+                            
                             isFirstDialog = false;
                         }
                         else

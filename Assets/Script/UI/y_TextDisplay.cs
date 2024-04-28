@@ -121,12 +121,16 @@ public class y_TextDisplay : MonoBehaviour
             if (textFileIndex < textFile.Length - 1)
                 GetTextFormFile(textFile[++textFileIndex]);
             MouseManager.instance.closedMouseControl = false;
-            //不为这个场景
-            if (SceneManager.GetActiveScene().name.CompareTo("GrounfSceneOne") == -1)
-            {
-                MouseManager.instance.closedMouseControl = false;
-            }
 
+            if (GameManager.instance.UI.GetComponent<s_UIControl>() != null)
+            {
+                if (GameManager.instance.UI.GetComponent<s_UIControl>().TaskProgress == TaskProgress.捡拾算筹 && !GameManager.instance.UI.GetComponent<s_UIControl>().IsFirstDialog)
+                {
+                    GameObject[] Npcs =  GameManager.instance.UI.GetComponent<s_UIControl>().Npcs;
+                    Npcs[1].SetActive(true);
+                    Npcs[0].SetActive(false);
+                }
+            }
 
 
             MouseManager.instance.closedMouseControl = false;
