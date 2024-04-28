@@ -13,8 +13,9 @@ public class s_UseItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     GameObject item;
     GameObject formula;
-    
+    bool isPermittedUseItem = false;
 
+    public bool IsPermittedUseItem { get => isPermittedUseItem; set => isPermittedUseItem = value; }
 
     private void Start()
     {
@@ -24,6 +25,10 @@ public class s_UseItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!isPermittedUseItem)
+        {
+            return;
+        }
         item = Instantiate(this.GetComponent<s_Item>().itemObj);
         item.gameObject.SetActive(true);
         Destroy(item.GetComponent<BoxCollider>());
@@ -35,6 +40,11 @@ public class s_UseItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (item == null)
+        {
+            return;
+        }
+
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = Camera.main.nearClipPlane + 10;
         item.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -43,6 +53,11 @@ public class s_UseItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (item == null)
+        {
+            return;
+        }
+
         hits = MouseManager.instance.HitInfos;
         bool isContains = false;
 

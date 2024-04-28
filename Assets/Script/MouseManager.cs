@@ -64,6 +64,10 @@ public class MouseManager : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Player").GetComponent<s_Player_01>().GetItem(hitInfo);
             }
 
+            if (GameManager.instance.UI.GetComponent<s_UIControl>() != null)
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<s_Player_01>().AbandonAnswer(hitInfos);
+            }
 
             if (hitInfo.collider.gameObject.CompareTag("Basic") && closedMouseControl)
             {

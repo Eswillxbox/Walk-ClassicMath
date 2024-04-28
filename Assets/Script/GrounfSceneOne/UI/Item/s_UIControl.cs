@@ -14,10 +14,10 @@ public class s_UIControl : MonoBehaviour
 
     [Header ("3d算筹的父物体")]
     public Transform CalculateChipsParent;
-    private Dictionary<int, Transform> CalculateChips = new Dictionary<int, Transform>();
+    private Dictionary<int, Transform> calculateChips = new Dictionary<int, Transform>();
     [Header ("算筹UI的父物体")]
     public Transform CalculateChipsParent_UI;
-    private Dictionary<int, Transform> CalculateChips_UI = new Dictionary<int, Transform>();
+    private Dictionary<int, Transform> calculateChips_UI = new Dictionary<int, Transform>();
 
     //道具数量
     Text targetCount_Text;
@@ -27,8 +27,9 @@ public class s_UIControl : MonoBehaviour
     int currentCount = 0;
 
     //算式
-    bool isCreateFormula = true;
-    bool isRight = false;
+    bool isFirstFormula = true;//是否是第一次生成算式
+    bool isCreateFormula = true;//是否允许创建算式
+    bool isRight = false;//答案是否正确
     GameObject[] formulas;
     public List<int> singleDigits = new List<int>();
     public List<int> TenFigureses = new List<int>();
@@ -47,6 +48,22 @@ public class s_UIControl : MonoBehaviour
         Init();
     }
 
+    private void Update()
+    {
+        Test();
+    }
+
+    void Test()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            for (int i = 0; i < calculateChips.Count; i++)
+            {
+                calculateChips[i].transform.localPosition = new Vector3(60,1,-80);
+            }
+        }
+    }
+
 
 
     //初始化，给数据赋值
@@ -62,8 +79,8 @@ public class s_UIControl : MonoBehaviour
 
             CalculateChipsParent_UI.GetChild(i).GetComponent<s_Item>().itemObj = CalculateChipsParent.GetChild(i).gameObject;
 
-            CalculateChips.Add(i,CalculateChipsParent.GetChild(i));
-            CalculateChips_UI.Add(i, CalculateChipsParent_UI.GetChild(i));
+            calculateChips.Add(i,CalculateChipsParent.GetChild(i));
+            calculateChips_UI.Add(i, CalculateChipsParent_UI.GetChild(i));
         }
 
         targetCount_Text = GameObject.Find("TargetCount").GetComponent<Text>();
@@ -73,6 +90,9 @@ public class s_UIControl : MonoBehaviour
         {
             t.gameObject.SetActive(false);
         }
+
+        //随机更改道具位置
+        RandomChangeItemPosition();
 
     }
 
@@ -129,7 +149,15 @@ public class s_UIControl : MonoBehaviour
     }
 
 
-    
+    void RandomChangeItemPosition()
+    {
+        for (int i = 0; i < calculateChips.Count - 1; i++)
+        {
+            Vector3 calculateChip = calculateChips[i].localPosition;
+            calculateChips[i].localPosition = calculateChips[i + 1].localPosition;
+            calculateChips[i + 1].localPosition = calculateChip;
+        }
+    }
 
 
     public void UpdateUI(int  index)
@@ -145,17 +173,50 @@ public class s_UIControl : MonoBehaviour
 
         targetCount_Text.text = currentCount + "/" + targetCount;
 
-        CalculateChips_UI[index].GetChild(1).gameObject.SetActive(false);
+        calculateChips_UI[index].GetChild(1).gameObject.SetActive(false);
+        calculateChips_UI[index].GetComponent<s_UseItem>().IsPermittedUseItem = true;
+
 
         //为生成算式准备
-        int number = CalculateChips[index].GetComponent<s_Item>().number;
-        if (number > 9)
+        int number = calculateChips[index].GetComponent<s_Item>().number;
+        SetAnsowerItemCount(number);
+    }
+
+
+    void SetAnsowerItemCount(int number)
+    {
+
+        if (isFirstFormula)
         {
-            TenFigureses.Add(number);
+            if ((singleDigits.Count + TenFigureses.Count) <= 5)
+            {
+                if (number > 9)
+                {
+                    TenFigureses.Add(number);
+                }
+                else
+                {
+                    singleDigits.Add(number);
+                }
+            }
         }
         else
         {
-            singleDigits.Add(number);
+            TenFigureses.Clear();
+            singleDigits.Clear();
+            isFirstFormula = false;
+            for (int i = 0; i < calculateChips.Count; i++)
+            {
+                int calculateChip_number = calculateChips[i].GetComponent<s_Item>().number;
+                if (calculateChip_number > 9)
+                {
+                    TenFigureses.Add(calculateChip_number);
+                }
+                else
+                {
+                    singleDigits.Add(calculateChip_number);
+                }
+            }
         }
     }
 
@@ -197,12 +258,12 @@ public class s_UIControl : MonoBehaviour
             int number2_TenFigures = number2 / 10 * 10;
             int number2_singleDigit = number2 % 10;
 
-            print("number1:  " + number1);
+/*            print("number1:  " + number1);
             print("number2:  " + number2);
             print("number1_TenFigures:  " + number1_TenFigures);
             print("number1_singleDigit:  " + number1_singleDigit);
             print("number2_TenFigures:  " + number2_TenFigures);
-            print("number2_singleDigit:  " + number2_singleDigit);
+            print("number2_singleDigit:  " + number2_singleDigit);*/
             
 
             CreateFormulaObject(number1_TenFigures, number1_singleDigit, number2_TenFigures, number2_singleDigit, formulas[i]);
@@ -212,7 +273,7 @@ public class s_UIControl : MonoBehaviour
 
     void CreateFormulaObject(int number1_TenFigures, int number1_singleDigit, int number2_TenFigures, int number2_singleDigit,GameObject formula)
     {
-        for (int i = 0; i < CalculateChips.Count; i++)
+        for (int i = 0; i < calculateChips.Count; i++)
         {
             //第一个数十位
             SetFormulaTransform(i, number1_TenFigures,formula, "number1十位");
@@ -227,13 +288,18 @@ public class s_UIControl : MonoBehaviour
             //第2个数个位
             SetFormulaTransform(i, number2_singleDigit, formula, "number2个位");
         }
+
+        formula.transform.Find("answer十位").gameObject.SetActive(false);
+        formula.transform.Find("answer个位").gameObject.SetActive(false);
+        formula.transform.Find("空十位").gameObject.SetActive(true);
+        formula.transform.Find("空个位").gameObject.SetActive(true);
     }
 
     void SetFormulaTransform(int i,int number, GameObject formula,string name)
     {
-        if (CalculateChips[i].GetComponent<s_Item>().number == number)
+        if (calculateChips[i].GetComponent<s_Item>().number == number)
         {
-            GameObject number1_TenFigures_Obj = Instantiate(CalculateChips[i].gameObject);
+            GameObject number1_TenFigures_Obj = Instantiate(calculateChips[i].gameObject);
             
             number1_TenFigures_Obj.transform.SetParent(formula.transform);
             number1_TenFigures_Obj.transform.localPosition = formula.transform.Find(name).localPosition;
@@ -277,6 +343,9 @@ public class s_UIControl : MonoBehaviour
 
         return isRight;
     }
+
+
+    
 
 
     public void SetTask()
@@ -343,6 +412,10 @@ public class s_UIControl : MonoBehaviour
 
                     formulas[0].gameObject.SetActive(true);
                     formulas[1].gameObject.SetActive(true);
+                    //更新待选择的答案
+                    isFirstFormula = false;
+                    SetAnsowerItemCount(0);
+                    
                     Createformula();
                     if (JudgeAnswer())
                     {
