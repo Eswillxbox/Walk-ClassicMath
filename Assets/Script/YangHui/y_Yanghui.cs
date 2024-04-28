@@ -7,13 +7,12 @@ public class y_Yanghui : MonoBehaviour
     [Header("棋盘基座")]
     public GameObject player_Basic;
     public Stack<GameObject> back_Basic;
-    public int basicNum;
+    private int basicNum;
     private Vector3[,] basic_position;
     private Stack<GameObject> basic_Stack = new Stack<GameObject>();
     public int targetNum;
     void Start()
     {
-        CreateBasic();
         GameManager.instance.GetYangHui(this.gameObject);
         back_Basic = new Stack<GameObject>();
     }
@@ -28,7 +27,7 @@ public class y_Yanghui : MonoBehaviour
     {
         //一个二元数组用来记录基座的坐标
         basic_position = new Vector3[basicNum, basicNum];
-        basic_position[0, 0] = player_Basic.transform.position;
+        basic_position[0, 0] = player_Basic.transform.position - new Vector3(0, 0.28f, 0);
         for (int i = 1; i < basicNum; i++)
         {
             for (int j = 0; j <= i; j++)
@@ -106,7 +105,6 @@ public class y_Yanghui : MonoBehaviour
                 basic_Stack.Pop().GetComponent<y_Basic>().ReBasic();
         }
         if (basic_Stack.Count != 0) basic_Stack.Clear();
-        Invoke("CreateBasic", 1.5f);
     }
 
     public void ReloadYangHui()
@@ -127,6 +125,17 @@ public class y_Yanghui : MonoBehaviour
             GameManager.instance.ExitYangHuiScene();
         }
     }
+
+    public void SetBasicNum(int num)
+    {
+        basicNum = num;
+    }
+
+    public int GetBasicNum()
+    {
+        return basicNum;
+    }
+
 
     public void Test()
     {

@@ -85,6 +85,7 @@ public class y_Basic : MonoBehaviour
     public void ReBasic()
     {
         targetPosition -= new Vector3(0, 0.28f, 0);
+        isBackBasic = false;
         Invoke("DesBasic", 0.5f);
     }
 
@@ -94,7 +95,7 @@ public class y_Basic : MonoBehaviour
     }
     public void RePlayerBasic()
     {
-        targetPosition = new Vector3(-15, -0.56f, 0);
+        targetPosition = new Vector3(-23, -0.56f, 0);
     }
 
     private void OnMouseEnter()
