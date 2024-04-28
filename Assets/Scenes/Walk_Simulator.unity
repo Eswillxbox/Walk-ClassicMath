@@ -377,9 +377,15 @@ MonoBehaviour:
   faceImages:
   - {fileID: 21300000, guid: 5ee65034ac629b647aa657144cb918fd, type: 3}
   - {fileID: 21300000, guid: a1f3e9fc14015e044aeaec3dcb58e361, type: 3}
-  textFile: {fileID: 4900000, guid: 68d14e46776816943b4a360a519e6ea3, type: 3}
+  textFile:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  textFileIndex: 0
   index: 0
   textSpeed: 0.2
+  overDisText: 0
+  onceDis: 0
 --- !u!1001 &18840917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13259,7 +13265,13 @@ MonoBehaviour:
   player_Hp: {fileID: 802655391}
   player_HpNum: {fileID: 922562362}
   diaLogDisplay: {fileID: 0}
+  recordTime: {fileID: 0}
   effect_Perhaps: []
+  message: {fileID: 0}
+  targetNum: {fileID: 0}
+  waitChooseBasic: 0
+  moveOrBack: 1
+  sceneIndex: 0
 --- !u!1001 &625263193
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50419,7 +50431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10385052b95fa454390c1e21c1755060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setUp: 0
+  closedMouseControl: 0
 --- !u!4 &1916469242
 Transform:
   m_ObjectHideFlags: 0

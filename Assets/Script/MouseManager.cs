@@ -27,6 +27,7 @@ public class MouseManager : MonoBehaviour
 
     private void Update()
     {
+        if (Camera.main == null) return;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray, out hitInfo);
         hitInfos = Physics.RaycastAll(ray);
@@ -53,9 +54,9 @@ public class MouseManager : MonoBehaviour
                 {
                     GameManager.instance.diaLogDisplay.SetActive(true);
                 }
-               
 
-                
+
+
                 this.closedMouseControl = true;
             }
 

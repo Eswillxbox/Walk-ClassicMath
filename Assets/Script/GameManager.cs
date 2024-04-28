@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public Text recordTime;
     private float secondsTime;
     private bool inRecording;
+    public bool isStartScene;
+    public Camera[] startSceneCamera;
     [Header("YangHui")]
     public GameObject[] effect_Perhaps;
     private GameObject yangHui;
@@ -42,6 +44,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        if (isStartScene)
+        {
+            startSceneCamera[0].gameObject.SetActive(true);
+            startSceneCamera[1].gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -96,6 +103,8 @@ public class GameManager : MonoBehaviour
         player.transform.position = player_basic.transform.position;
         player_basic.GetComponent<y_Basic>().DownBasic();
         player.GetComponent<PlayerController>().MoveToTarget(player_basic.transform.position);
+        player.GetComponent<y_Player>().SetMaxHp(basicNum * (basicNum + 1) / 2);
+        player.GetComponent<y_Player>().Healing();
         //DisplayUI(true);
     }
 
@@ -105,7 +114,7 @@ public class GameManager : MonoBehaviour
         MouseManager.instance.SwitchSetUp(false);
         player_basic = yangHui.GetComponent<y_Yanghui>().player_Basic;
         player_basic.GetComponent<y_Basic>().isBackBasic = false;
-        player.GetComponent<y_Player>().Healing(true);
+        player.GetComponent<y_Player>().Healing();
         //DisplayUI(false);
     }
 
@@ -303,4 +312,17 @@ public class GameManager : MonoBehaviour
         this.inRecording = inRecording;
     }
 
+    public void StartSceneToGame()
+    {
+        if (isStartScene)
+        {
+            startSceneCamera[0].gameObject.SetActive(false);
+            startSceneCamera[1].gameObject.SetActive(true);
+        }
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

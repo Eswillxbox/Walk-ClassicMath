@@ -65,6 +65,12 @@ public class y_Player : MonoBehaviour
         return player_RealHp;
     }
 
+    public void SetMaxHp(int hp)
+    {
+        maxHp = hp;
+    }
+
+
     public void Attacked(int i)
     {
         player_RealHp -= i;
@@ -73,9 +79,8 @@ public class y_Player : MonoBehaviour
     {
         player_RealHp += i;
     }
-    public void Healing(bool isExit)
+    public void Healing()
     {
-        if (isExit)
-            player_RealHp = maxHp;
+        player_RealHp = maxHp;
     }
 }

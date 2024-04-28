@@ -31428,8 +31428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aecbe0dd97256ab488dfbddc92cba6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 565932342}
-  interaction_Image: {fileID: 967869218}
+  interaction_Image: {fileID: 0}
 --- !u!23 &982070072
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35193,8 +35192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aecbe0dd97256ab488dfbddc92cba6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 565932342}
-  interaction_Image: {fileID: 142116276}
+  interaction_Image: {fileID: 0}
 --- !u!23 &1369902572
 MeshRenderer:
   m_ObjectHideFlags: 0
