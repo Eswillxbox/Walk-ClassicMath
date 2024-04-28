@@ -28,6 +28,9 @@ public class s_Player_01 : MonoBehaviour
     {
         GameManager.instance.UI.GetComponent<s_UIControl>().UpdateUI(hitInfo.collider.gameObject.GetComponent<s_Item>().index);
 
+        //避免算式高亮
+        hitInfo.collider.gameObject.GetComponent<s_Item>().SetStartMaterial();
+        
         //捡到销毁
         hitInfo.collider.gameObject.SetActive(false);
 
@@ -60,36 +63,39 @@ public class s_Player_01 : MonoBehaviour
 
                 GameObject targetObj = hit.collider.gameObject;
 
-                if (hit.collider.name.Contains("空十"))
+                if (hit.collider.name.Contains("空") || hit.collider.name.Contains("answer"))
                 {
-                    hit.collider.gameObject.SetActive(false);
-                    targetObj = Item_0_parent.transform.Find("answer十位").gameObject;
-                    Item_0.transform.localPosition = targetObj.transform.localPosition;
-                    Item_0.transform.localRotation = targetObj.transform.localRotation;
+                    if (hit.collider.name.Contains("空十"))
+                    {
+                        hit.collider.gameObject.SetActive(false);
+                        targetObj = Item_0_parent.transform.Find("answer十位").gameObject;
+                        Item_0.transform.localPosition = targetObj.transform.localPosition;
+                        Item_0.transform.localRotation = targetObj.transform.localRotation;
 
-                    Item_0.name = targetObj.name;
+                        Item_0.name = targetObj.name;
 
+                    }
+                    else if (hit.collider.name.Contains("空个"))
+                    {
+                        hit.collider.gameObject.SetActive(false);
+                        targetObj = Item_0_parent.transform.Find("answer个位").gameObject;
+                        Item_0.transform.localPosition = targetObj.transform.localPosition;
+                        Item_0.transform.localRotation = targetObj.transform.localRotation;
+
+                        Item_0.name = targetObj.name;
+
+                    }
+                    else
+                    {
+                        Item_0.transform.localPosition = targetObj.transform.localPosition;
+                        Item_0.transform.localRotation = targetObj.transform.localRotation;
+
+                        Item_0.name = hit.collider.name;
+
+                    }
+
+                    Destroy(targetObj.gameObject);
                 }
-                else if(hit.collider.name.Contains("空个"))
-                {
-                    hit.collider.gameObject.SetActive(false);
-                    targetObj = Item_0_parent.transform.Find("answer个位").gameObject;
-                    Item_0.transform.localPosition = targetObj.transform.localPosition;
-                    Item_0.transform.localRotation = targetObj.transform.localRotation;
-
-                    Item_0.name = targetObj.name;
-                    
-                }
-                else
-                {
-                    Item_0.transform.localPosition = targetObj.transform.localPosition;
-                    Item_0.transform.localRotation = targetObj.transform.localRotation;
-                    
-                    Item_0.name = hit.collider.name;
-                    
-                }
-
-                Destroy(targetObj.gameObject);
 
 
             }

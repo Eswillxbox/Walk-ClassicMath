@@ -36,6 +36,8 @@ public class s_UIControl : MonoBehaviour
     public List<int> answers = new List<int>();
 
 
+    bool isFirstDialog = true;
+
 
 
     TaskProgress taskProgress;
@@ -374,11 +376,21 @@ public class s_UIControl : MonoBehaviour
                     if (currentCount >= targetCount)
                     {
                         taskProgress += 1;
+                        isFirstDialog = true;
                         continue;
                     }
                     else
                     {
-                        GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(1);
+                        if (isFirstDialog)
+                        {
+                            GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(1);
+                            isFirstDialog = false;
+                        }
+                        else
+                        {
+                            GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(7);
+                        }
+                        
                     }
                     break;
 
@@ -393,11 +405,21 @@ public class s_UIControl : MonoBehaviour
                     {
                         taskProgress += 1;
                         isCreateFormula = true;
+                        isFirstDialog = true;
                         continue;
                     }
                     else
                     {
-                        GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(2);
+                        if (isFirstDialog)
+                        {
+                            GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(2);
+                            isFirstDialog = false;
+                        }
+                        else
+                        {
+                            GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(8);
+                        }
+                        
                     }
                     break;
 
@@ -422,11 +444,20 @@ public class s_UIControl : MonoBehaviour
                     {
                         taskProgress += 1;
                         isCreateFormula = true;
+                        isFirstDialog = true;
                         continue;
                     }
                     else
                     {
-                        GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(4);
+                        if (isFirstDialog)
+                        {
+                            GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(4);
+                            isFirstDialog = false;
+                        }
+                        else
+                        {
+                            GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(8);
+                        }
                     }
                     break;
 
@@ -441,11 +472,20 @@ public class s_UIControl : MonoBehaviour
                     {
                         taskProgress += 1;
                         isCreateFormula = true;
+                        isFirstDialog = true;
                         continue;
                     }
                     else
                     {
-                        GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(5);
+                        if (isFirstDialog)
+                        {
+                            GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(5);
+                            isFirstDialog = false;
+                        }
+                        else
+                        {
+                            GameManager.instance.diaLogDisplay.GetComponent<y_TextDisplay>().SetTextFile(8);
+                        }
                     }
                     break;
 

@@ -42,6 +42,12 @@ public class s_Item : MonoBehaviour
 
     private void OnMouseExit()
     {
+        SetStartMaterial();
+    }
+
+    public void SetStartMaterial()
+    {
+        isHighLight = false;
         foreach (var item in GetComponentsInChildren<MeshRenderer>())
         {
             item.material = firstMaterial;

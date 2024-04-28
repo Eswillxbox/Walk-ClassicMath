@@ -30,6 +30,7 @@ public class s_UseItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             return;
         }
         item = Instantiate(this.GetComponent<s_Item>().itemObj);
+        
         item.gameObject.SetActive(true);
         Destroy(item.GetComponent<BoxCollider>());
         //item.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
