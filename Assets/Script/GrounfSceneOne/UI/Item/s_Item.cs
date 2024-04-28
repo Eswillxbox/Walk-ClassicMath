@@ -5,10 +5,14 @@ using UnityEngine;
 
 public class s_Item : MonoBehaviour
 {
-   
-    public int number;//×ÔÉí±íÊ¾µÄÊý×Ö
-    public int index;//Ë÷Òý
+
+    public int number;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public int index;//ï¿½ï¿½ï¿½ï¿½
     public GameObject itemObj;
+    public Material firstMaterial;
+    public Material highLight_Red;
+    public bool isHighLight;
+
 
     // Start is called before the first frame update
     void Start()
@@ -17,12 +21,30 @@ public class s_Item : MonoBehaviour
         {
             number = int.Parse(this.gameObject.name);
         }
-        
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    private void OnMouseEnter()
+    {
+        if (isHighLight)
+        {
+            foreach (var item in GetComponentsInChildren<MeshRenderer>())
+            {
+                item.material = highLight_Red;
+            }
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        foreach (var item in GetComponentsInChildren<MeshRenderer>())
+        {
+            item.material = firstMaterial;
+        }
     }
 }

@@ -72,6 +72,7 @@ public class MouseManager : MonoBehaviour
                     GameManager.instance.waitChooseBasic = -1;
                     GameManager.instance.YangHuiSetMessage(hitInfo.collider.gameObject.GetComponent<y_Basic>().basic_kind + "\n");
                     GameManager.instance.YangHuiMessage(hitInfo.collider.gameObject.GetComponent<y_Basic>().basic_kind);
+                    GameManager.instance.moveOrBack = true;
                     GameManager.instance.DisplayUI();
                 }
                 else if (hitInfo.collider.gameObject.GetComponent<y_Basic>().isWaitChoose == +1)
@@ -79,11 +80,13 @@ public class MouseManager : MonoBehaviour
                     GameManager.instance.waitChooseBasic = +1;
                     GameManager.instance.YangHuiSetMessage(hitInfo.collider.gameObject.GetComponent<y_Basic>().basic_kind + "\n");
                     GameManager.instance.YangHuiMessage(hitInfo.collider.gameObject.GetComponent<y_Basic>().basic_kind);
+                    GameManager.instance.moveOrBack = true;
                     GameManager.instance.DisplayUI();
                 }
                 else if (hitInfo.collider.gameObject.GetComponent<y_Basic>().isBackBasic)
                 {
                     GameManager.instance.YangHuiSetMessage("确认要返回上一节点吗，需要扣除10点数");
+                    GameManager.instance.moveOrBack = false;
                     GameManager.instance.DisplayUI();
                 }
 

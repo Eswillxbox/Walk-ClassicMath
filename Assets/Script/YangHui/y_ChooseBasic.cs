@@ -48,7 +48,7 @@ public class y_ChooseBasic : MonoBehaviour
         if (backSlider.value >= 0.85 && isBack)
         {
             isBack = false;
-            GameManager.instance.YangHuiBack();
+            //GameManager.instance.YangHuiBack();
             Invoke("SliderZero", 0.5f);
         }
         else if (backSlider.value <= 0.2f) isBack = true;
