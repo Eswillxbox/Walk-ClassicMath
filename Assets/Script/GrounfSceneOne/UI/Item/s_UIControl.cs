@@ -93,6 +93,7 @@ public class s_UIControl : MonoBehaviour
 
         //随机更改道具位置
         RandomChangeItemPosition();
+        GameManager.instance.SetInRecording(true);
 
     }
 
