@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private GameObject yangHui;
     private GameObject player_basic;
     public Text message;
+    public Text targetNum;
     public int waitChooseBasic = 0;
     public bool moveOrBack = true;
 
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
         this.yangHui.GetComponent<y_Yanghui>().SetBasicNum(basicNum);
         this.yangHui.GetComponent<y_Yanghui>().targetNum = targetNum;
         this.yangHui.GetComponent<y_Yanghui>().CreateBasic();
+        this.targetNum.text = "目标:" + targetNum;
         this.player_basic = yangHui.GetComponent<y_Yanghui>().player_Basic;
         MouseManager.instance.SwitchSetUp(isInYangHui);
         player.transform.position = player_basic.transform.position;
