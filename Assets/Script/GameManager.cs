@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     public Image player_Hp;
     public Text player_HpNum;
     public GameObject diaLogDisplay;
+    public Text recordTime;
+    private float secondsTime;
+    private bool inRecording;
     [Header("YangHui")]
     public GameObject[] effect_Perhaps;
     private GameObject yangHui;
@@ -44,6 +47,7 @@ public class GameManager : MonoBehaviour
     {
         if (player != null) DisplayAttribute();
         if (IsInYangHui() && player_basic != null) SetIsWaitChose(player_basic);
+        if (recordTime != null && inRecording) ReCordingTime();
     }
 
     // public void DisplayBattle(bool isDisplay)
@@ -273,6 +277,28 @@ public class GameManager : MonoBehaviour
     {
         if (player != null) return player;
         return null;
+    }
+
+    //计时
+    private void ReCordingTime()
+    {
+        //计数每秒+1
+        secondsTime += Time.deltaTime;
+        string time;
+        time = String.Format("{0:00}", Math.Floor(secondsTime / 60)) + ":" + String.Format("{0:00}", secondsTime % 59);
+        recordTime.text = time;
+    }
+
+    //重置计时
+    public void ReTime()
+    {
+        recordTime.text = "00:00";
+        secondsTime = 0.0f;
+    }
+    //打开计时
+    public void SetInRecording(bool inRecording)
+    {
+        this.inRecording = inRecording;
     }
 
 }
