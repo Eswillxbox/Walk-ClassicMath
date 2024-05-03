@@ -265,15 +265,7 @@ public class s_UIControl : MonoBehaviour
             int number1_singleDigit = number1 % 10;
             int number2_TenFigures = number2 / 10 * 10;
             int number2_singleDigit = number2 % 10;
-
-/*            print("number1:  " + number1);
-            print("number2:  " + number2);
-            print("number1_TenFigures:  " + number1_TenFigures);
-            print("number1_singleDigit:  " + number1_singleDigit);
-            print("number2_TenFigures:  " + number2_TenFigures);
-            print("number2_singleDigit:  " + number2_singleDigit);*/
-            
-
+          
             CreateFormulaObject(number1_TenFigures, number1_singleDigit, number2_TenFigures, number2_singleDigit, formulas[i]);
 
         }
