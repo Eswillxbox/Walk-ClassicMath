@@ -46,9 +46,13 @@ public class MouseManager : MonoBehaviour
                 OnMouseClicked!.Invoke(hitInfo.point);
             if (hitInfo.collider.gameObject.CompareTag("Npc") && !closedMouseControl)
             {
+                AudioManage.instance.SetClips(ClipSelect.选择);
                 if (GameManager.instance.UI.GetComponent<s_UIControl>() != null)
                 {
                     GameManager.instance.UI.GetComponent<s_UIControl>().SetTask();
+                }else if (GameManager.instance.UI.GetComponent<s_TaskControl_03>() != null)
+                {
+                    GameManager.instance.UI.GetComponent<s_TaskControl_03>().SetTask();
                 }
                 else
                 {

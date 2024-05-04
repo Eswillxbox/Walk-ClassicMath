@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Unity.VisualScripting.Member;
 
 public class GameManager : MonoBehaviour
 {
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
         if (player != null) DisplayAttribute();
         if (IsInYangHui() && player_basic != null) SetIsWaitChose(player_basic);
         if (recordTime != null && inRecording) ReCordingTime();
+        SetMoveAudio();
     }
 
     // public void DisplayBattle(bool isDisplay)
@@ -106,6 +109,37 @@ public class GameManager : MonoBehaviour
         player.GetComponent<y_Player>().SetMaxHp(basicNum * (basicNum + 1) / 2);
         player.GetComponent<y_Player>().Healing();
         //DisplayUI(true);
+    }
+
+    void SetMoveAudio()
+    {
+
+        AudioSource source = player.GetComponent<AudioSource>();
+        if (player.GetComponent<NavMeshAgent>() != null)
+        {
+            if (player.GetComponent<NavMeshAgent>().velocity.magnitude > 0.1f)
+            {
+                source.loop = true;
+                if (source.isPlaying)
+                {
+                    return;
+                }
+                source.Play();
+            }
+            else
+            {
+                if (source.isPlaying)
+                {
+                    source.Stop();
+                }
+
+            }
+        }
+        else
+        {
+            print(null);
+        }
+        
     }
 
     public void ExitYangHuiScene()
@@ -273,6 +307,12 @@ public class GameManager : MonoBehaviour
     public void ToNextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(WaitToNextScene());
+    }
+
+    IEnumerator WaitToNextScene()
+    {
+        yield return new WaitForSeconds(1f);
     }
 
     public void ToMainScene()
@@ -314,6 +354,7 @@ public class GameManager : MonoBehaviour
 
     public void StartSceneToGame()
     {
+        AudioManage.instance.SetClips(ClipSelect.选择);
         if (isStartScene)
         {
             startSceneCamera[0].gameObject.SetActive(false);
@@ -323,6 +364,7 @@ public class GameManager : MonoBehaviour
 
     public void ExitGame()
     {
+        AudioManage.instance.SetClips(ClipSelect.选择);
         Application.Quit();
     }
 }

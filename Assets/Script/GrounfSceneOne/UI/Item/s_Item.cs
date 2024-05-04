@@ -33,6 +33,7 @@ public class s_Item : MonoBehaviour
     {
         if (isHighLight)
         {
+            AudioManage.instance.SetClips(ClipSelect.选择);
             foreach (var item in GetComponentsInChildren<MeshRenderer>())
             {
                 item.material = highLight_Red;

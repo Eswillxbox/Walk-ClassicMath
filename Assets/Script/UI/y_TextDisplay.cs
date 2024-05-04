@@ -117,6 +117,7 @@ public class y_TextDisplay : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && index == textList.Count && !overDisText)
         {
+            AudioManage.instance.SetClips(ClipSelect.选择);
             gameObject.SetActive(false);
             if (textFileIndex < textFile.Length - 1)
                 GetTextFormFile(textFile[++textFileIndex]);
@@ -132,6 +133,16 @@ public class y_TextDisplay : MonoBehaviour
                 }
             }
 
+            if (GameManager.instance.UI.GetComponent<s_TaskControl_03>() != null)
+            {
+                if (GameManager.instance.UI.GetComponent<s_TaskControl_03>().task == Task.答题)
+                {
+                    GameObject[] Npcs = GameManager.instance.UI.GetComponent<s_TaskControl_03>().Npcs;
+                    Npcs[1].SetActive(false);
+                    //Npcs[0].SetActive(false);
+                }
+            }
+
 
             MouseManager.instance.closedMouseControl = false;
             index = 0;
@@ -139,6 +150,7 @@ public class y_TextDisplay : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(0) && index == textList.Count && overDisText)
         {
+            AudioManage.instance.SetClips(ClipSelect.选择);
             if (onceDis == 1)
             {
                 onceDis++;
@@ -152,6 +164,7 @@ public class y_TextDisplay : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
+            AudioManage.instance.SetClips(ClipSelect.选择);
             if (textFinished)
                 StartCoroutine("SetDialogText");
             else if (!textFinished)

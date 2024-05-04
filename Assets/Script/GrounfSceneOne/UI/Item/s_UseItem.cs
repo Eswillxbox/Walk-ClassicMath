@@ -30,7 +30,7 @@ public class s_UseItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             return;
         }
         item = Instantiate(this.GetComponent<s_Item>().itemObj);
-        
+        AudioManage.instance.SetClips(ClipSelect.选择);
         item.gameObject.SetActive(true);
         Destroy(item.GetComponent<BoxCollider>());
         //item.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
@@ -77,7 +77,7 @@ public class s_UseItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             if (isContains)
             {
-                
+                AudioManage.instance.SetClips(ClipSelect.使用道具);
                 if (item.gameObject.GetComponent<s_Item>().number > 9)
                 {
                     item.transform.SetParent(formula.transform);

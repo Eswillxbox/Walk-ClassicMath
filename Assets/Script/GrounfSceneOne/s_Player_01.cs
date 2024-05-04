@@ -26,6 +26,7 @@ public class s_Player_01 : MonoBehaviour
 
     public void GetItem(RaycastHit hitInfo)
     {
+        AudioManage.instance.SetClips(ClipSelect.获取道具);
         GameManager.instance.UI.GetComponent<s_UIControl>().UpdateUI(hitInfo.collider.gameObject.GetComponent<s_Item>().index);
 
         //避免算式高亮
@@ -40,6 +41,7 @@ public class s_Player_01 : MonoBehaviour
     //
     public void AbandonAnswer(RaycastHit[] hits)
     {
+
         bool isFormula = false;//是算式
         foreach (RaycastHit hit in hits)
         {
@@ -53,7 +55,7 @@ public class s_Player_01 : MonoBehaviour
         {
             return;
         }
-
+        AudioManage.instance.SetClips(ClipSelect.选择);
         foreach (RaycastHit hit in hits)
         {
             if (hit.collider.CompareTag("Item"))

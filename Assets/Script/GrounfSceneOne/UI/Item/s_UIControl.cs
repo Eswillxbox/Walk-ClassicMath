@@ -121,11 +121,14 @@ public class s_UIControl : MonoBehaviour
 
         //帮助
         helpOpen_Button.onClick.AddListener(delegate{
+            AudioManage.instance.SetClips(ClipSelect.选择);
+            
             help_Panel.gameObject.SetActive(true);
         });
 
         helpClose_BUtton.onClick.AddListener(delegate
         {
+            AudioManage.instance.SetClips(ClipSelect.选择);
             help_Panel.gameObject.SetActive(false);
             MouseManager.instance.closedMouseControl = false;
         });
@@ -134,16 +137,19 @@ public class s_UIControl : MonoBehaviour
         //算筹简介
         CalculateChip_Open_Button.onClick.AddListener(delegate {
             CalculateChip_Panel.gameObject.SetActive(true);
+            AudioManage.instance.SetClips(ClipSelect.选择);
         });
 
         CalculateChip_Close_BUtton.onClick.AddListener(delegate
         {
+            AudioManage.instance.SetClips(ClipSelect.选择);
             CalculateChip_Panel.gameObject.SetActive(false);
             MouseManager.instance.closedMouseControl = false;
         });
 
         //下一关
         nextScene_Button.onClick.AddListener(delegate {
+            AudioManage.instance.SetClips(ClipSelect.跳转);
             GameManager.instance.ToNextScene();
         });
 
